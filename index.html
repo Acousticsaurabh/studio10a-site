@@ -110,6 +110,12 @@
   .gear-bl { bottom:0; left:0; width:clamp(33rem,74vw,61rem);
              transform:translate(-50%,50%); }
   @media (max-width:640px){ .gear-tr { width:32rem; } .gear-bl { width:28rem; } }
+  /* solid things float ABOVE the gears: logos, cards, video tiles. The gears
+     pass behind them like machinery behind windows - depth, not decoration. */
+  .hero .wordmark, .cd .cdlogo, .cards, .cd .roles span,
+  .work .feature, .work .vgrid, .contact .rows, .room {
+    position:relative; z-index:45;
+  }
 
   /* ── scroll-reveal: sections rise in as they arrive ── */
   .reveal { opacity:0; transform:translateY(26px); transition:opacity .7s ease, transform .7s ease; }
