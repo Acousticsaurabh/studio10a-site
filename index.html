@@ -109,7 +109,12 @@
   /* bottom-left: ~13% smaller, exactly a quarter showing - the counter gear */
   .gear-bl { bottom:0; left:0; width:clamp(33rem,74vw,61rem);
              transform:translate(-50%,50%); }
-  @media (max-width:640px){ .gear-tr { width:32rem; } .gear-bl { width:28rem; } }
+  /* phone: the lead gear tucks back near the corner - 40% visible was too
+     much on a small screen; desktop keeps the fuller reveal */
+  @media (max-width:640px){
+    .gear-tr { width:30rem; transform:translate(47%,-47%); }
+    .gear-bl { width:26rem; }
+  }
   /* solid things float ABOVE the gears: logos, cards, video tiles. The gears
      pass behind them like machinery behind windows - depth, not decoration. */
   .hero .wordmark, .cd .cdlogo, .cards, .cd .roles span,
