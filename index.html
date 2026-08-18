@@ -210,12 +210,6 @@
   h1 .gold { color:var(--gold); }   /* the real brand gold - his call over the safer dark shade */
   .hero p.lede { margin-top:1.2rem; font-size:clamp(1rem,2.5vw,1.15rem);
                  color:var(--soft); max-width:52ch; }
-  .cta { display:inline-block; margin-top:2rem; font-family:var(--geo); font-weight:600;
-         font-size:.85rem; letter-spacing:.08em; text-transform:uppercase;
-         background:var(--blue); color:#fff; padding:.85rem 1.9rem; text-decoration:none;
-         border:0; border-radius:999px; box-shadow:0 6px 18px rgba(72,102,156,.28);
-         transition:background .25s, transform .25s, box-shadow .25s; }
-  .cta:hover { background:var(--gold); transform:translateY(-2px); box-shadow:0 10px 26px rgba(252,186,0,.35); }
 
   /* ── about / story ── */
   .about { background:var(--tint); }
@@ -290,12 +284,6 @@
 .stats { display:flex; gap:2.2rem; flex-wrap:wrap; margin:1.6rem 0 0.4rem; }
 .stats b { font-family:var(--geo); font-size:1.7rem; font-weight:600; color:var(--ink); display:block; line-height:1.1; }
 .stats span.lbl { font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); }
-.hero .cta2 { display:inline-block; margin-left:.9rem; font-family:var(--geo); font-weight:600;
-  font-size:.85rem; letter-spacing:.08em; text-transform:uppercase;
-  background:var(--gold); color:#fff; padding:.85rem 1.9rem; border-radius:999px;
-  text-shadow:0 1px 2px rgba(20,24,30,.18); box-shadow:0 6px 18px rgba(252,186,0,.28);
-  transition:background .25s, transform .25s, box-shadow .25s; }
-.cta2:hover { background:var(--blue); text-shadow:none; transform:translateY(-2px); box-shadow:0 10px 26px rgba(72,102,156,.38); }
 .wgrid { display:grid; grid-template-columns:repeat(auto-fill,minmax(255px,1fr)); gap:1.4rem 1.3rem; margin-top:2rem; }
 .wcard { cursor:pointer; background:transparent; border:0; text-align:left; padding:0; font:inherit; color:inherit; }
 .wcard .th { position:relative; aspect-ratio:16/9; overflow:hidden; border-radius:10px; background:var(--tint); box-shadow:0 1px 0 var(--rule); }
@@ -307,13 +295,11 @@
 .wcard .play svg { width:15px; height:15px; fill:var(--ink); margin-left:2px; }
 .wcard .wt { font-family:var(--geo); font-weight:600; margin:.65rem 0 .1rem; line-height:1.35; }
 .wcard .wc { font-size:.82rem; color:var(--faint); letter-spacing:.05em; }
-.plbtn { display:inline-block; margin-top:2.2rem; font-family:var(--geo); font-weight:600; letter-spacing:.04em;
-  color:#fff; border:0; border-radius:999px; padding:.85rem 1.8rem;
-  background:var(--blue); box-shadow:0 6px 18px rgba(72,102,156,.28);
-  transition:background .25s, color .25s, transform .25s, box-shadow .25s; }
-.plbtn:hover { background:var(--gold); color:#fff; transform:translateY(-2px); box-shadow:0 10px 26px rgba(252,186,0,.35); }
-.brands .chips { display:flex; flex-wrap:wrap; gap:.7rem .7rem; margin-top:1.8rem; }
-.brands .chips span { font-family:var(--geo); font-weight:600; letter-spacing:.12em; text-transform:uppercase; font-size:.86rem; color:var(--ink); background:var(--tint); border:1px solid var(--rule); border-radius:999px; padding:.55rem 1.1rem; }
+.plbtn { display:inline-block; margin-top:2rem; font-family:var(--geo); font-weight:600;
+  font-size:.85rem; letter-spacing:.08em; text-transform:uppercase;
+  color:#fff; background:var(--blue); border:0; border-top:3px solid var(--gold);
+  padding:.85rem 1.6rem; transition:background .25s; }
+.plbtn:hover { background:var(--gold); color:var(--ink); }
 .voices { margin-top:1.6rem; color:var(--soft); }
 .voices b { font-family:var(--geo); color:var(--ink); }
 .cform { margin-top:2rem; max-width:640px; display:grid; gap:1rem; }
@@ -321,8 +307,8 @@
 .cform input, .cform select, .cform textarea { width:100%; font:inherit; color:var(--ink); background:#fff; border:1px solid var(--rule); border-radius:10px; padding:.85rem 1rem; outline:none; transition:border-color .2s, box-shadow .2s; }
 .cform input:focus, .cform select:focus, .cform textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px rgba(252,186,0,.18); }
 .cform textarea { min-height:130px; resize:vertical; }
-.cform .send { justify-self:start; font-family:var(--geo); font-weight:600; background:var(--gold); color:var(--ink); border:0; border-radius:999px; padding:.85rem 2rem; cursor:pointer; letter-spacing:.04em; }
-.cform .send:hover { filter:brightness(1.05); }
+.cform .send { justify-self:start; font-family:var(--geo); font-weight:600; font-size:.85rem; letter-spacing:.08em; text-transform:uppercase; background:var(--blue); color:#fff; border:0; border-top:3px solid var(--gold); padding:.85rem 2rem; cursor:pointer; transition:background .25s; }
+.cform .send:hover { background:var(--gold); color:var(--ink); }
 .sentnote { display:none; margin-top:1.2rem; background:var(--tint); border-left:3px solid var(--gold); padding:.9rem 1.1rem; border-radius:0 8px 8px 0; }
 .sentnote.show { display:block; }
 .vmodal { position:fixed; inset:0; background:rgba(20,24,30,.92); display:none; place-items:center; z-index:99; padding:4vmin; }
@@ -383,12 +369,6 @@
 .shint { text-align:center; margin-top:.7rem; font-size:.72rem; letter-spacing:.16em;
   text-transform:uppercase; color:var(--faint); opacity:.7; }
 
-.ctarow { display:flex; flex-wrap:wrap; gap:1rem; margin-top:2rem; }
-.ctarow .cta, .ctarow .cta2 { margin:0; text-align:center; }
-@media (max-width:640px){
-  .ctarow { gap:.8rem; }
-  .ctarow .cta, .ctarow .cta2 { flex:1 1 100%; padding:.95rem 1rem; }
-}
 
 html, body { overflow-x: clip; }
 .showcase { overflow: hidden; }
@@ -402,6 +382,8 @@ html, body { overflow-x: clip; }
 .heroline { font-size:1.06rem; font-weight:400; line-height:1.7; max-width:56ch; margin:0; }
 .hero .wrap { padding-top:1.4rem; padding-bottom:.6rem; }
 #work .wrap { padding-top:1.8rem; }
+
+.craftline { max-width:58ch; margin:1.6rem auto 0; text-align:center; color:var(--soft); }
 </style>
 </head>
 <body>
@@ -437,8 +419,6 @@ html, body { overflow-x: clip; }
   <div class="wrap">
     <p class="kicker">The work</p>
     <h2>Hear it for <em>yourself</em></h2>
-    <p style="max-width:58ch; color:var(--soft)">Some of India's most loved voices, and our
-    craft behind them - music, voice and sound. We made them <em>sound better</em>.</p>
     <div class="showcase" id="showcase">
       <div class="stage" id="stage">
       <button class="slide" data-v="8a1mQFBojGE" data-t="Ramleela — Sonu Nigam" data-c="Humare Ram · T-Series" type="button" aria-label="Ramleela — Sonu Nigam">
@@ -497,6 +477,8 @@ html, body { overflow-x: clip; }
         <button class="sarrow" id="snext" aria-label="Next">→</button>
       </div>
       <p class="shint">tap the centre card to play · slide for more</p>
+      <p class="craftline">Some of India's most loved voices, and our craft behind them -
+      music, voice and sound. We made them <em>sound better</em>.</p>
     </div>
     <a class="plbtn" href="https://youtube.com/playlist?list=PLzJzmswd5TN2C6Wby1NkVG_qWObchHGPG" target="_blank" rel="noopener">Open the full playlist on YouTube →</a>
   </div>
