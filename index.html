@@ -170,8 +170,7 @@
      quarter shows, and rotation about the centre keeps that footprint
      stable while it spins. Top-right turns clockwise, bottom-left counter. */
   .gear { position:fixed; z-index:40; opacity:.20; pointer-events:none; }
-  .gear img { width:100%; height:auto; display:block; will-change:transform;
-              transition:transform .1s linear; }
+  .gear img { width:100%; height:auto; display:block; will-change:transform; }
   /* top-right: pulled inward so a good ~40% of it shows - the lead gear */
   .gear-tr { top:0; right:0; width:clamp(38rem,85vw,70rem);
              transform:translate(37%,-37%); }
@@ -374,10 +373,7 @@ html, body { overflow-x: clip; }
 .showcase { overflow: hidden; }
 @media (max-width:640px){
   .gear { opacity:.14; }
-  .gear img { transition:none !important; animation:gearspin 75s linear infinite; }
-  .gear-bl img { animation-direction:reverse; }
 }
-@keyframes gearspin { to { transform:rotate(360deg); } }
 
 .heroline { font-size:1.06rem; font-weight:400; line-height:1.7; max-width:56ch; margin:0; }
 .hero .wrap { padding-top:1.4rem; padding-bottom:.2rem; }
@@ -758,7 +754,6 @@ section.work { padding-top:.4rem; }
   (function () {
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    var noSpin = matchMedia('(max-width: 640px)').matches;
     var tr = document.querySelector('.gear-tr img');
     var bl = document.querySelector('.gear-bl img');
     var ticking = false;
@@ -768,12 +763,10 @@ section.work { padding-top:.4rem; }
       bl.style.transform = 'rotate(' + (-deg) + 'deg)';    // counter-clockwise
       ticking = false;
     }
-    if (!noSpin) {
-      addEventListener('scroll', function () {
-        if (!ticking) { ticking = true; requestAnimationFrame(turn); }
-      }, { passive: true });
-      turn();
-    }
+    addEventListener('scroll', function () {
+      if (!ticking) { ticking = true; requestAnimationFrame(turn); }
+    }, { passive: true });
+    turn();
 
     var sections = document.querySelectorAll('section .wrap, footer .in');
     sections.forEach(function (el) { el.classList.add('reveal'); });
