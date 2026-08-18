@@ -143,6 +143,10 @@
     --blue:#5B7DB8; --blue-deep:#9FB9E4;
     --soft:#AEB4B1; --faint:#7D847F; --rule:#2B2E36;
   }
+  [data-theme="dark"] nav { background:rgba(36,40,49,.96); border-bottom-color:#333845; }
+  [data-theme="dark"] .gear { opacity:.30; }
+  @media (max-width:640px){ [data-theme="dark"] .gear { opacity:.22; } }
+  [data-theme="dark"] .themebtn { background:#242831; border-color:#333845; }
   [data-theme="dark"] .cform input, [data-theme="dark"] .cform select,
   [data-theme="dark"] .cform textarea { background:var(--tint); }
   [data-theme="dark"] .slide { box-shadow:0 12px 40px rgba(0,0,0,.5); }
@@ -178,7 +182,14 @@
         backdrop-filter:blur(8px); border-bottom:1px solid var(--rule); }
   .nav-in { display:flex; align-items:center; justify-content:space-between;
             gap:1rem; padding:.65rem clamp(1.1rem,4vw,2.5rem); max-width:62rem; margin:0 auto; }
-  nav .logo img { height:2.9rem; width:auto; display:block; }
+  nav .logo { flex:0 0 auto; line-height:0; }
+  nav .logo img { height:2.9rem; width:auto; max-width:none; display:block; }
+  @media (max-width:640px){
+    .nav-in { gap:.6rem; padding:.55rem .8rem; }
+    nav .logo img { height:2.6rem; }
+    nav .links { gap:.45rem .7rem; justify-content:flex-end; }
+    nav a { font-size:.58rem; letter-spacing:.1em; }
+  }
   nav .links { display:flex; gap:clamp(.7rem,2.5vw,1.5rem); flex-wrap:wrap; }
   nav a { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em;
           text-transform:uppercase; color:var(--soft); text-decoration:none; }
@@ -205,7 +216,8 @@
   /* solid things float ABOVE the gears: logos, cards, video tiles. The gears
      pass behind them like machinery behind windows - depth, not decoration. */
   .hero .wordmark, .cd .cdlogo, .cards, .cd .roles span,
-  .work .feature, .work .vgrid, .contact .rows, .room {
+  .showcase, .work h2, .craftline, .plbtn, .lgmarquee, .voices,
+  .contact .rows, .room {
     position:relative; z-index:45;
   }
 
@@ -425,7 +437,7 @@ section.work { padding-top:.2rem; }
 
 <header class="hero" id="top">
   <div class="wrap">
-    <picture><source srcset="assets/wordmark-dark.png" media="(prefers-color-scheme: dark)" id="wm-dark-src"><img class="wordmark" src="assets/wordmark.png" alt="Studio10a Productions - sounds better"></picture>
+    <picture><img class="wordmark" src="assets/wordmark.png" alt="Studio10a Productions - sounds better"></picture>
     <p class="kicker cities">Indore · Mumbai · Delhi</p>
     <h1 class="lede heroline"><b>Your creativity and branding partner.</b> Music, jingles, film scores,
     lyrics, voice-over, sound design and creative campaigns - built on a legacy
@@ -840,10 +852,6 @@ section.work { padding-top:.2rem; }
     function apply(t) {
       if (t === 'dark') { root.setAttribute('data-theme', 'dark'); }
       else { root.removeAttribute('data-theme'); }
-      var file = t === 'dark' ? 'assets/wordmark-dark.png' : 'assets/wordmark.png';
-      document.querySelectorAll('.wordmark, nav .logo img').forEach(function (im) { im.src = file; });
-      var srcEl = document.getElementById('wm-dark-src');
-      if (srcEl) srcEl.remove();
       moon.style.display = t === 'dark' ? 'none' : 'block';
       sun.style.display = t === 'dark' ? 'block' : 'none';
       btn.setAttribute('aria-label', t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
