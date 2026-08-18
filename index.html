@@ -144,6 +144,7 @@
     --soft:#AEB4B1; --faint:#7D847F; --rule:#2B2E36;
   }
   [data-theme="dark"] nav { background:rgba(36,40,49,.96); border-bottom-color:#333845; }
+  [data-theme="dark"] footer { background:#1A1E26; border-top:1px solid #2B2F38; }
   [data-theme="dark"] .gear { opacity:.30; }
   @media (max-width:640px){ [data-theme="dark"] .gear { opacity:.22; } }
   [data-theme="dark"] .themebtn { background:#242831; border-color:#333845; }
@@ -303,12 +304,16 @@
   .contact a { color:var(--blue-deep); text-decoration:none; }
   .contact a:hover { text-decoration:underline; }
   /* footer sits above the gears, same as the nav - they slide under both */
-  footer { background:var(--ink); color:#B9BDB6; padding:1.6rem 0;
+  footer { background:#14181E; color:#B9BDB6; padding:1.9rem 0 1.6rem;
            position:relative; z-index:50; }
   footer .in { display:flex; flex-wrap:wrap; gap:.6rem 1.6rem; align-items:baseline;
                font-family:var(--mono); font-size:.64rem; letter-spacing:.12em;
                text-transform:uppercase; }
   footer b { color:var(--gold); font-weight:600; }
+  footer .fbrand { font-size:.78rem; letter-spacing:.14em; }
+  footer .fbrand i { font-style:normal; color:#89A7DC; font-weight:600; }
+  footer .fbrand em { font-style:normal; text-transform:none; letter-spacing:.03em;
+                      font-size:.72rem; color:#7E857F; margin-left:.55rem; }
 
 /* ---- v3: work-first layout ---- */
 .stats { display:flex; gap:2.2rem; flex-wrap:wrap; margin:1.6rem 0 0.4rem; }
@@ -692,8 +697,7 @@ section.work { padding-top:.2rem; }
 
 <footer>
   <div class="wrap in">
-    <span><b>Studio10a Productions</b></span>
-    <span>Sounds better…</span>
+    <span class="fbrand"><b>Studio10a</b> <i>Productions</i> <em>Sounds better…</em></span>
     <span>Indore · Mumbai · Delhi</span>
     <span>© 2026 Studio10a Productions</span>
   </div>
