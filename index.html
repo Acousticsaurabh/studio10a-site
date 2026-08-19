@@ -170,8 +170,10 @@
   /* ── invoice grammar ── */
   .kicker { font-family:var(--mono); font-size:.66rem; letter-spacing:.22em;
             text-transform:uppercase; color:var(--blue-deep); }
-  .goldbar { height:3px; background:linear-gradient(90deg,var(--gold) 0%,var(--gold) 62%,
-             var(--blue) 62%,var(--blue) 100%); border:0; }
+  .goldbar { height:3px; border:0; background:linear-gradient(90deg,var(--gold) 0%,var(--gold) 62%,
+             var(--blue) 62%,var(--blue) 100%); }
+  .goldbar:nth-of-type(even) { background:linear-gradient(90deg,var(--blue) 0%,var(--blue) 62%,
+             var(--gold) 62%,var(--gold) 100%); }
   h2 { font-family:var(--geo); font-weight:600; font-size:clamp(1.5rem,4.5vw,2.2rem);
        letter-spacing:.01em; margin:.5rem 0 1.1rem; }
   h2 em { font-style:normal; color:var(--blue-deep); }
