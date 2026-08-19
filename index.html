@@ -355,7 +355,7 @@
 
 
 /* ---- v4: showcase carousel + logo marquee ---- */
-.showcase { margin-top:2.2rem; }
+.showcase { margin-top:2.2rem; position:relative; }
 .stage { position:relative; height:clamp(220px, 38vw, 430px); touch-action:pan-y; }
 .stage.dragging .slide { transition:none; }
 .slide { position:absolute; top:0; left:50%; width:min(640px, 72%); aspect-ratio:16/9;
@@ -366,18 +366,18 @@
 .slide .play { position:absolute; right:14px; bottom:14px; width:48px; height:48px; border-radius:50%;
   background:var(--gold); display:grid; place-items:center; opacity:0; transition:opacity .3s; }
 .slide .play svg { width:18px; height:18px; fill:var(--ink); margin-left:2px; }
-.slide.cur { opacity:1; pointer-events:auto; z-index:3; outline:3px solid var(--gold); outline-offset:-3px; }
+.slide.cur { opacity:1; pointer-events:auto; z-index:3; }
 .slide.cur .play { opacity:.95; }
 .slide.prev, .slide.next { opacity:.35; pointer-events:auto; z-index:2; filter:saturate(.7); }
 .slide.prev { transform:translateX(calc(-50% - 58% + var(--dx,0px))) scale(.72); }
 .slide.next { transform:translateX(calc(-50% + 58% + var(--dx,0px))) scale(.72); }
-.slidetitle { text-align:center; margin-top:1.3rem; min-height:2.9em; }
+.slidetitle { text-align:center; margin-top:.6rem; min-height:2.6em; }
 .slidetitle b { font-family:var(--geo); font-weight:600; display:block; font-size:1.08rem; }
 .slidetitle span { color:var(--faint); font-size:.86rem; letter-spacing:.05em; }
 .slidetitle.fade { animation:stfade .45s ease; }
 @keyframes stfade { from { opacity:0; transform:translateY(4px);} to { opacity:1; transform:none;} }
-.snav { display:flex; align-items:center; justify-content:center; margin-top:1rem; }
-.scount { font-family:var(--mono); font-size:.85rem; letter-spacing:.18em; color:var(--faint); }
+.snav { display:flex; justify-content:flex-end; margin:.55rem .1rem 0 0; }
+.scount { font-family:var(--mono); font-size:.64rem; letter-spacing:.14em; color:var(--faint); opacity:.5; }
 @media (max-width:640px){
   .slide { width:88%; }
   .slide.prev { transform:translateX(calc(-50% - 72% + var(--dx,0px))) scale(.7); opacity:.18; }
@@ -399,8 +399,6 @@
 .finep { margin:.9rem auto 0; padding:0 1.5rem; text-align:center;
   font-size:.68rem; line-height:1.5; color:var(--faint); opacity:.7; }
 
-.shint { text-align:center; margin-top:.7rem; font-size:.72rem; letter-spacing:.16em;
-  text-transform:uppercase; color:var(--faint); opacity:.7; }
 
 
 html, body { overflow-x: clip; }
@@ -501,11 +499,10 @@ section.work { padding-top:.2rem; }
         <span class="play"><svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
       </button>
       </div>
-      <p class="slidetitle" id="slidetitle"><b></b><span></span></p>
       <div class="snav">
         <span class="scount" id="scount">01 / 12</span>
       </div>
-      <p class="shint">tap the centre card to play · slide for more</p>
+      <p class="slidetitle" id="slidetitle"><b></b><span></span></p>
       <p class="craftline">Some of India's most loved voices, and our craft behind them -
       music, voice and sound. We made them <em>sound better</em>.</p>
     </div>
