@@ -54,8 +54,9 @@ section { padding:3.6rem 0; }
 .cta { display:inline-block; font-family:var(--geo); font-weight:600; font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; padding:.85rem 1.6rem; border:2px solid var(--gold); color:var(--ink); text-decoration:none; }
 .cta.primary { background:var(--gold); color:#14181E; }
 .cta.primary:hover { background:transparent; color:var(--ink); }
-.cta.ghost { border-color:var(--rule); color:var(--soft); margin-left:.8rem; }
-.cta.ghost:hover { border-color:var(--blue); color:var(--blue-deep); }
+.manuallink { margin-top:1.1rem; font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; }
+.manuallink a { color:var(--soft); text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:4px; }
+.manuallink a:hover { color:var(--gold); }
 .shot { border:1px solid var(--rule); border-top:3px solid var(--gold); display:block; width:100%; height:auto; }
 .shotcap { font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-top:.6rem; }
 .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1.6rem; }
@@ -74,7 +75,15 @@ footer { border-top:1px solid var(--rule); padding:1.6rem 0 2rem; }
 footer .in { display:flex; flex-wrap:wrap; gap:1rem 2rem; justify-content:space-between; font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; color:var(--faint); }
 footer b { color:var(--gold); font-weight:600; }
 .credit { font-size:.8rem; color:var(--faint); margin-top:2rem; }
-@media (max-width:640px){ .spec { grid-template-columns:1fr; } .cta.ghost{ margin-left:0; margin-top:.8rem; } }
+@media (max-width:640px){
+  .spec { grid-template-columns:1fr; }
+  .nav-in { flex-direction:column; align-items:center; gap:.5rem; padding:.6rem 1rem .6rem; }
+  .nav-in .logo img { height:1.7rem; }
+  .nav-in .links { justify-content:center; gap:.35rem 1rem; width:100%; }
+  nav a { font-size:.58rem; letter-spacing:.1em; }
+  section { padding:2.8rem 0; }
+  .hero { padding:2.8rem 0 2.4rem; }
+}
 </style>
 </head>
 <body id="top">
@@ -98,7 +107,7 @@ footer b { color:var(--gold); font-weight:600; }
     <p class="lede">Two plugins that put ElevenLabs AI voices inside your DAW. <b>VoiceLab</b> changes the voice of anything already on your timeline. <b>TextLab</b> turns a typed script into speech - on the clip itself. No exports, no browser tabs, no copy-paste. The timeline is the interface.</p>
     <p class="hosts">VST3 + ARA2 &nbsp;|&nbsp; Studio One &middot; Cubase &middot; Nuendo &middot; REAPER &middot; any VST3 host &nbsp;|&nbsp; macOS &middot; Windows</p>
     <a class="cta primary" id="buybtn" href="https://payhip.com/b/rBIPg">Download free</a>
-    <a class="cta ghost" href="assets/voicesuite/manual.pdf">Read the manual</a>
+    <p class="manuallink"><a href="assets/voicesuite/manual.pdf">Read the manual</a></p>
   </div>
 </section>
 
