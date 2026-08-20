@@ -18,6 +18,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Mulish:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
 :root {
+  color-scheme: only light;
   --ink:#14181E; --paper:#FBFBF9; --tint:#F3F1EA;
   --gold:#FCBA00; --gold-deep:#6E5526;
   --blue:#48669C; --blue-deep:#3C5A8A;
@@ -27,6 +28,7 @@
   --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
 }
 [data-theme="dark"] {
+  color-scheme: dark;
   --ink:#ECEDEF; --paper:#15171C; --tint:#1E2128;
   --gold:#FCBA00; --gold-deep:#E8C766;
   --blue:#5B7DB8; --blue-deep:#9FB9E4;
@@ -66,6 +68,8 @@ section { padding:3.6rem 0; }
 .themebtn svg { width:17px; height:17px; display:block; }
 @media (max-width:640px){ .themebtn { width:36px; height:36px; right:.6rem; } }
 .shot { border:1px solid var(--rule); border-top:3px solid var(--gold); display:block; width:100%; height:auto; }
+:root:not([data-theme="dark"]) .shot.if-dark { display:none; }
+[data-theme="dark"] .shot.if-light { display:none; }
 .shotcap { font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-top:.6rem; }
 .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1.6rem; }
 .card { background:var(--paper); padding:1.6rem 1.5rem; }
@@ -123,9 +127,11 @@ footer b { color:var(--gold); font-weight:600; }
 
 <section>
   <div class="wrap">
-    <img class="shot" src="assets/voicesuite/voicelab-reaper.png" alt="Studio10a VoiceLab running as an ARA2 plugin in REAPER" loading="lazy">
+    <img class="shot if-dark" src="assets/voicesuite/voicelab-reaper.png" alt="Studio10a VoiceLab running as an ARA2 plugin in REAPER" loading="lazy">
+    <img class="shot if-light" src="assets/voicesuite/voicelab-reaper-light.png" alt="Studio10a VoiceLab running as an ARA2 plugin in REAPER - light skin" loading="lazy">
     <p class="shotcap">VoiceLab live in REAPER - the clip's waveform, VERSIONS row, and the gold CONVERT</p>
-    <img class="shot" src="assets/voicesuite/textlab-dark.png" alt="Studio10a TextLab - script, voices, generations" loading="lazy" style="margin-top:1.6rem;">
+    <img class="shot if-dark" src="assets/voicesuite/textlab-dark.png" alt="Studio10a TextLab - script, voices, generations" loading="lazy" style="margin-top:1.6rem;">
+    <img class="shot if-light" src="assets/voicesuite/textlab-light.png" alt="Studio10a TextLab - script, voices, generations - light skin" loading="lazy" style="margin-top:1.6rem;">
     <p class="shotcap">TextLab - script on the right, your voice library on the left, every generation kept with its text</p>
   </div>
 </section>
@@ -150,8 +156,8 @@ footer b { color:var(--gold); font-weight:600; }
     <span class="kicker">Details</span>
     <h2>Two views that <em>earn their pixels</em></h2>
     <div class="detailgrid">
-      <div><img class="shot" src="assets/voicesuite/voices-detail.png" alt="Voice browser with folders and favourites" loading="lazy"><p class="shotcap">The voice browser - folders, favourites, free preview on every row</p></div>
-      <div><img class="shot" src="assets/voicesuite/generations-detail.png" alt="Generations list with per-clip script" loading="lazy"><p class="shotcap">Generations - click a clip, its script appears; drag any row to the timeline</p></div>
+      <div><img class="shot if-dark" src="assets/voicesuite/voices-detail.png" alt="Voice browser with folders and favourites" loading="lazy"><img class="shot if-light" src="assets/voicesuite/voices-detail-light.png" alt="Voice browser with folders and favourites - light skin" loading="lazy"><p class="shotcap">The voice browser - folders, favourites, free preview on every row</p></div>
+      <div><img class="shot if-dark" src="assets/voicesuite/generations-detail.png" alt="Generations list with per-clip script" loading="lazy"><img class="shot if-light" src="assets/voicesuite/generations-detail-light.png" alt="Generations list with per-clip script - light skin" loading="lazy"><p class="shotcap">Generations - click a clip, its script appears; drag any row to the timeline</p></div>
     </div>
     <div class="spec">
       <span class="k">Formats</span><span class="v">VST3, with ARA2 clip integration where the host supports it</span>
