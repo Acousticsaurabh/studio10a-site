@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Voice Suite - AI voices inside your DAW | Studio10a Productions</title>
+<meta name="description" content="Studio10a Voice Suite: two VST3 + ARA2 plugins that put ElevenLabs AI voices inside Studio One, Cubase and REAPER. VoiceLab converts any clip's voice; TextLab turns a script into speech on the timeline.">
+<link rel="canonical" href="https://studio10a.com/voicesuite.html">
+<meta property="og:type" content="product">
+<meta property="og:site_name" content="Studio10a Productions">
+<meta property="og:title" content="Studio10a Voice Suite - AI voices inside your DAW">
+<meta property="og:description" content="VoiceLab: change any clip's voice on the timeline. TextLab: type a script, the clip speaks it. VST3 + ARA2 for Studio One, Cubase, REAPER.">
+<meta property="og:url" content="https://studio10a.com/voicesuite.html">
+<meta property="og:image" content="https://studio10a.com/assets/voicesuite/og.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@500;600&family=Mulish:wght@400;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:#14181E; --paper:#FBFBF9; --tint:#F3F1EA;
+  --gold:#FCBA00; --gold-deep:#6E5526;
+  --blue:#48669C; --blue-deep:#3C5A8A;
+  --soft:#5A6360; --faint:#8A928D; --rule:#E3E1D8;
+  --geo:"Jost","Futura","Century Gothic",system-ui,sans-serif;
+  --body:"Mulish","Avenir Next","Helvetica Neue",system-ui,-apple-system,sans-serif;
+  --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+}
+[data-theme="dark"] {
+  --ink:#ECEDEF; --paper:#15171C; --tint:#1E2128;
+  --gold:#FCBA00; --gold-deep:#E8C766;
+  --blue:#5B7DB8; --blue-deep:#9FB9E4;
+  --soft:#AEB4B1; --faint:#7D847F; --rule:#2B2E36;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--paper); color:var(--ink); font-family:var(--body); line-height:1.65; }
+.wrap { max-width:72rem; margin:0 auto; padding:0 1.4rem; }
+.kicker { font-family:var(--mono); font-size:.66rem; letter-spacing:.22em; text-transform:uppercase; color:var(--blue-deep); }
+.goldbar { height:3px; border:0; background:linear-gradient(90deg,var(--gold) 0%,var(--gold) 62%,var(--blue) 62%,var(--blue) 100%); }
+h1 { font-family:var(--geo); font-weight:600; font-size:clamp(2rem,6vw,3.4rem); line-height:1.08; margin:.6rem 0 1rem; }
+h1 .gold { color:var(--gold); }
+h2 { font-family:var(--geo); font-weight:600; font-size:clamp(1.4rem,4vw,2rem); margin-bottom:.4rem; }
+h2 em { font-style:normal; color:var(--blue-deep); }
+nav { position:sticky; top:0; z-index:50; background:color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter:blur(8px); border-bottom:1px solid var(--rule); }
+.nav-in { display:flex; align-items:center; justify-content:space-between; padding:.7rem 1.4rem; max-width:72rem; margin:0 auto; }
+.nav-in .logo img { height:2rem; display:block; }
+.nav-in .links { display:flex; gap:1.2rem; flex-wrap:wrap; }
+nav a { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; color:var(--soft); text-decoration:none; }
+nav a:hover, nav a.here { color:var(--gold); }
+section { padding:3.6rem 0; }
+.hero { padding:4.5rem 0 3rem; }
+.hero p.lede { color:var(--soft); max-width:56ch; font-size:1.06rem; margin-bottom:1.6rem; }
+.hero .hosts { font-family:var(--mono); font-size:.68rem; letter-spacing:.14em; text-transform:uppercase; color:var(--faint); margin-bottom:2rem; }
+.cta { display:inline-block; font-family:var(--geo); font-weight:600; font-size:.9rem; letter-spacing:.08em; text-transform:uppercase; padding:.85rem 1.6rem; border:2px solid var(--gold); color:var(--ink); text-decoration:none; }
+.cta.primary { background:var(--gold); color:#14181E; }
+.cta.primary:hover { background:transparent; color:var(--ink); }
+.cta.ghost { border-color:var(--rule); color:var(--soft); margin-left:.8rem; }
+.cta.ghost:hover { border-color:var(--blue); color:var(--blue-deep); }
+.shot { border:1px solid var(--rule); border-top:3px solid var(--gold); display:block; width:100%; height:auto; }
+.shotcap { font-family:var(--mono); font-size:.62rem; letter-spacing:.12em; text-transform:uppercase; color:var(--faint); margin-top:.6rem; }
+.cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(16rem,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1.6rem; }
+.card { background:var(--paper); padding:1.6rem 1.5rem; }
+.card .no { font-family:var(--mono); font-size:.66rem; color:var(--gold-deep); }
+.card h3 { font-family:var(--geo); font-weight:600; font-size:1.05rem; margin:.5rem 0; }
+.card p { font-size:.88rem; color:var(--soft); }
+.tintband { background:var(--tint); }
+.spec { display:grid; grid-template-columns:11rem 1fr; gap:.4rem 1.2rem; margin-top:1.4rem; max-width:44rem; }
+.spec .k { font-family:var(--mono); font-size:.64rem; letter-spacing:.13em; text-transform:uppercase; color:var(--faint); padding-top:.25rem; }
+.spec .v { color:var(--ink); font-size:.95rem; }
+.detailgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(18rem,1fr)); gap:1.4rem; margin-top:1.6rem; }
+.faq dt { font-family:var(--geo); font-weight:600; margin-top:1.2rem; }
+.faq dd { color:var(--soft); margin-top:.25rem; }
+footer { border-top:1px solid var(--rule); padding:1.6rem 0 2rem; }
+footer .in { display:flex; flex-wrap:wrap; gap:1rem 2rem; justify-content:space-between; font-family:var(--mono); font-size:.64rem; letter-spacing:.12em; color:var(--faint); }
+footer b { color:var(--gold); font-weight:600; }
+.credit { font-size:.8rem; color:var(--faint); margin-top:2rem; }
+@media (max-width:640px){ .spec { grid-template-columns:1fr; } .cta.ghost{ margin-left:0; margin-top:.8rem; } }
+</style>
+</head>
+<body id="top">
+
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="index.html"><img src="assets/wordmark.png" alt="Studio10a - sounds better"></a>
+    <div class="links">
+      <a href="index.html#work">Work</a>
+      <a href="index.html#services">Services</a>
+      <a class="here" href="voicesuite.html">Voice Suite</a>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="wrap">
+    <span class="kicker">Studio10a software - first release</span>
+    <h1>Voice <span class="gold">Suite</span></h1>
+    <p class="lede">Two plugins that put ElevenLabs AI voices inside your DAW. <b>VoiceLab</b> changes the voice of anything already on your timeline. <b>TextLab</b> turns a typed script into speech - on the clip itself. No exports, no browser tabs, no copy-paste. The timeline is the interface.</p>
+    <p class="hosts">VST3 + ARA2 &nbsp;|&nbsp; Studio One &middot; Cubase &middot; Nuendo &middot; REAPER &middot; any VST3 host &nbsp;|&nbsp; macOS &middot; Windows</p>
+    <a class="cta primary" id="buybtn" href="#buy">Get it on Payhip</a>
+    <a class="cta ghost" href="assets/voicesuite/manual.pdf">Read the manual</a>
+  </div>
+</section>
+
+<hr class="goldbar">
+
+<section>
+  <div class="wrap">
+    <img class="shot" src="assets/voicesuite/textlab-dark.png" alt="Studio10a TextLab - script, voices, generations" loading="lazy">
+    <p class="shotcap">TextLab - script on the right, 870-voice library on the left, every generation kept with its text</p>
+  </div>
+</section>
+
+<section class="tintband">
+  <div class="wrap">
+    <span class="kicker">What it does</span>
+    <h2>Made by a producer, <em>for producers</em></h2>
+    <div class="cards">
+      <div class="card"><span class="no">01</span><h3>VoiceLab - voice to voice</h3><p>Put it on a clip, pick a voice, press Convert. The clip plays in the new voice - the original untouched, one click away. Every conversion becomes a VERSION chip: A/B instantly, keep them all in the project.</p></div>
+      <div class="card"><span class="no">02</span><h3>TextLab - text to speech</h3><p>Type or paste a script - Hindi, Tamil, Bangla, English, 70+ languages. On a clip, the clip becomes the speech. On a track, generate and drag. Emotion tags, multiple takes per line, per-line batching.</p></div>
+      <div class="card"><span class="no">03</span><h3>Your whole voice library</h3><p>Search, folders, favourites and free auditioning across every voice on your ElevenLabs account - synced in one click, shared by both plugins, with a live credit meter so cost is never a surprise.</p></div>
+      <div class="card"><span class="no">04</span><h3>Batch and versions</h3><p>Select many clips, convert them all with one press. One to three takes per generation with reproducible seeds. Twenty versions per clip, each addressable from the keyboard.</p></div>
+      <div class="card"><span class="no">05</span><h3>Fast hands welcome</h3><p>Editable shortcut for Convert and Generate. Ctrl+1-0 and Cmd+1-0 switch versions - the shortcut is printed on every chip. Drag any version, or the original, straight onto any track.</p></div>
+      <div class="card"><span class="no">06</span><h3>Clean by principle</h3><p>Dark and light skins, one settings brain across every instance, files named the way a producer would name them, a real manual and a real uninstaller. Nothing in the UI that is not needed.</p></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <span class="kicker">Details</span>
+    <h2>Two views that <em>earn their pixels</em></h2>
+    <div class="detailgrid">
+      <div><img class="shot" src="assets/voicesuite/voices-detail.png" alt="Voice browser with folders and favourites" loading="lazy"><p class="shotcap">The voice browser - folders, favourites, free preview on every row</p></div>
+      <div><img class="shot" src="assets/voicesuite/generations-detail.png" alt="Generations list with per-clip script" loading="lazy"><p class="shotcap">Generations - click a clip, its script appears; drag any row to the timeline</p></div>
+    </div>
+    <div class="spec">
+      <span class="k">Formats</span><span class="v">VST3, with ARA2 clip integration where the host supports it</span>
+      <span class="k">Hosts</span><span class="v">Studio One, Cubase, Nuendo, REAPER, Cakewalk - any VST3 DAW for TextLab's track mode</span>
+      <span class="k">Systems</span><span class="v">macOS 11+ (Apple Silicon + Intel, universal) &middot; Windows 10+ (64-bit)</span>
+      <span class="k">Requires</span><span class="v">Your own ElevenLabs account and API key (free tier works; generations use your credits)</span>
+      <span class="k">Included</span><span class="v">Both plugins, illustrated quick-start manual, uninstaller</span>
+    </div>
+  </div>
+</section>
+
+<section class="tintband" id="buy">
+  <div class="wrap">
+    <span class="kicker">Get it</span>
+    <h2>Launching on <em>Payhip</em></h2>
+    <p style="color:var(--soft); max-width:52ch;">The suite is finished, certified and in daily studio use. The Payhip page goes live shortly - the button above will take you straight there.</p>
+    <p class="credit">Designed and produced by Saurabh Mehta &middot; Studio10a Productions &middot; Indore &middot; Mumbai &middot; Delhi</p>
+  </div>
+</section>
+
+<section>
+  <div class="wrap faq">
+    <span class="kicker">Questions</span>
+    <h2>Straight <em>answers</em></h2>
+    <dl>
+      <dt>Do I need an ElevenLabs subscription?</dt>
+      <dd>You need an ElevenLabs account and API key. The free tier works for trying it; real production use spends credits on your plan. The plugins show the cost before you spend.</dd>
+      <dt>Does VoiceLab work in my DAW?</dt>
+      <dd>The full clip magic needs ARA2 - Studio One, Cubase, Nuendo, REAPER, Cakewalk. TextLab's generate-and-drag mode works in any VST3 host.</dd>
+      <dt>Is my audio uploaded somewhere?</dt>
+      <dd>Conversion sends the selected clip's audio to ElevenLabs' API under your own account, and generated audio comes back to your machine. Your API key never leaves your computer and is never stored in project files.</dd>
+      <dt>Hindi? Tamil? Bangla?</dt>
+      <dd>Yes - typing, display and speech. Devanagari and other scripts work natively in the script box.</dd>
+    </dl>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap in">
+    <span><b>Studio10a</b> Voice Suite</span>
+    <span>Indore &middot; Mumbai &middot; Delhi</span>
+    <span>&copy; 2026 Studio10a Productions</span>
+  </div>
+</footer>
+
+</body>
+</html>
