@@ -196,7 +196,7 @@
   nav .links { display:flex; gap:clamp(.7rem,2.5vw,1.5rem); flex-wrap:wrap; }
   nav a { font-family:var(--mono); font-size:.62rem; letter-spacing:.14em;
           text-transform:uppercase; color:var(--soft); text-decoration:none; }
-  nav a:hover { color:var(--blue-deep); }
+  nav a:hover, nav a.here { color:var(--gold); }
 
   /* ── two corner gears, like the invoice's watermarks but alive ──
      Each seal's CENTRE sits exactly on a viewport corner, so precisely one
@@ -884,6 +884,32 @@ section.work { padding-top:.2rem; }
       apply(next);
       try { localStorage.setItem('s10a-theme', next); } catch (e) {}
     });
+    addEventListener('storage', function (e) {
+      if (e.key === 's10a-theme') apply(e.newValue === 'light' ? 'light' : 'dark');
+    });
+  })();
+</script>
+<script>
+  (function () {
+    var pairs = [];
+    document.querySelectorAll('nav .links a[href^="#"]').forEach(function (a) {
+      var sec = document.querySelector(a.getAttribute('href'));
+      if (sec) pairs.push([sec, a]);
+    });
+    var current = null;
+    function spy() {
+      var mark = window.scrollY + innerHeight * 0.35;
+      var best = null;
+      pairs.forEach(function (p) { if (p[0].offsetTop <= mark) best = p[1]; });
+      if (best !== current) {
+        if (current) current.classList.remove('here');
+        if (best) best.classList.add('here');
+        current = best;
+      }
+    }
+    addEventListener('scroll', spy, { passive: true });
+    addEventListener('resize', spy, { passive: true });
+    spy();
   })();
 </script>
 </body>
