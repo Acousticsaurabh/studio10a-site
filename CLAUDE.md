@@ -1,4 +1,4 @@
-# studio10a.com — web desk
+# studio10a.com - web desk
 
 Static site (GitHub Pages, custom domain via Cloudflare DNS/cache). `index.html` = studio home (story, Room 10A, services); `voicesuite.html` = Voice Suite product page; `assets/voicesuite/` = screenshots, cover, `manual.pdf` (the **Help** guide - file name stays `manual.pdf`). Push = publish; only push when asked.
 
