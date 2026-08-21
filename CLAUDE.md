@@ -16,5 +16,8 @@ Static site (GitHub Pages, custom domain via Cloudflare DNS/cache). `index.html`
 ## Payhip
 Listing payhip.com/b/rBIPg mirrors the site copy (title carries the version, description ends with "Version x.y.z (date)"). Edited through Saurabh's Chrome by the supervisor; files ≤10 MB can be uploaded by Claude, the Mac pkg cannot.
 
+## Legal / disclaimer
+The ElevenLabs + trademark disclaimer lives only on voicesuite.html as a small `section.disclaimer` block at the end of the content (above the footer). Never put Voice Suite legal text in the main site footer or on index.html.
+
 ## Money
 Domain / Cloudflare / tool costs are not kept here - one line into `~/Studio10A-Brain/Inbox.md` for accounts.
