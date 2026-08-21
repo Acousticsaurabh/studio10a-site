@@ -61,7 +61,9 @@ section { padding:3.6rem 0; }
 .manuallink a:hover { color:var(--gold); }
 .asis { margin-top:.9rem; font-size:.8rem; color:var(--faint); max-width:60ch; }
 .asis a { color:var(--soft); text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:3px; }
-footer .finep { font-size:.72rem; color:var(--faint); max-width:80ch; margin:.8rem auto 0; padding:0 1.2rem; line-height:1.5; }
+.disclaimer { padding:1.6rem 0 2.2rem; border-top:1px solid var(--rule); }
+.disclaimer p { font-size:.76rem; color:var(--faint); max-width:84ch; line-height:1.55; margin-top:.5rem; }
+.disclaimer a { color:var(--soft); text-decoration:underline; text-decoration-color:var(--gold); text-underline-offset:3px; }
 .themebtn { position:fixed; right:.85rem; top:50%; transform:translateY(-50%);
   width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
   background:var(--paper); color:var(--ink); border:1px solid var(--rule);
@@ -237,6 +239,13 @@ footer b { color:var(--gold); font-weight:600; }
   </div>
 </section>
 
+<section class="disclaimer">
+  <div class="wrap">
+    <span class="kicker">Disclaimer</span>
+    <p>Studio10a Productions is not affiliated with, endorsed by, or sponsored by ElevenLabs. ElevenLabs is a trademark of ElevenLabs Inc., named on this page only to describe what the Voice Suite plugins connect to. Voice Suite requires your own ElevenLabs account; all generation is billed to you by ElevenLabs under their terms. The plugins are shared free and as-is, without warranty - see the <a href="assets/voicesuite/LICENSE.txt">licence</a> and <a href="assets/voicesuite/THIRD-PARTY-NOTICES.txt">third-party notices</a>. Studio One, Cubase, Nuendo, REAPER, Logic Pro, GarageBand, VST and Audio Units are trademarks of their respective owners.</p>
+  </div>
+</section>
+
 <footer>
   <div class="wrap in">
     <span><b>Studio10a</b> Voice Suite</span>
@@ -244,7 +253,6 @@ footer b { color:var(--gold); font-weight:600; }
     <span>&copy; 2026 Studio10a Productions</span>
     <span><a href="https://github.com/Acousticsaurabh/studio10a-voice-suite/releases" style="color:inherit; text-decoration:none; opacity:.75;">v1.5.5 &middot; release notes</a></span>
   </div>
-  <p class="finep">Studio10a Productions is not affiliated with, endorsed by, or sponsored by ElevenLabs. ElevenLabs is a trademark of ElevenLabs Inc., used here only to describe compatibility. Voice Suite requires your own ElevenLabs account; all generation is billed to you by ElevenLabs under their terms. Studio One, Cubase, Nuendo, REAPER, Logic Pro, GarageBand, VST and Audio Units are trademarks of their respective owners.</p>
 </footer>
 
 <button class="themebtn" id="themebtn" aria-label="Switch to light mode" title="Dark / light">
