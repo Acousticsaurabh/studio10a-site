@@ -1,0 +1,35 @@
+Studio10A Voice Suite - End User Licence Agreement
+Copyright (c) 2026 Studio10A Productions (Saurabh Mehta). All rights reserved.
+
+GRANT. You are granted a free, non-exclusive, revocable licence to install
+and use this software for any lawful purpose, personal or commercial. You
+may not sell it, redistribute it for a fee, or misrepresent its origin.
+
+THIRD-PARTY SERVICES. This software connects to the ElevenLabs API using
+credentials you supply. Studio10A Productions is not affiliated with,
+endorsed by, or sponsored by ElevenLabs. ElevenLabs is a trademark of
+ElevenLabs Inc., named here only to describe compatibility. Your use of the
+ElevenLabs service is governed solely by your agreement with ElevenLabs, and
+all charges, credits, and content rights arising from that use are your
+responsibility. You are responsible for confirming that your ElevenLabs plan
+permits your intended use, including commercial use and any attribution it
+requires. The optional ENHANCE feature likewise connects to an AI text
+provider of your choice (for example Google Gemini, Groq, Anthropic,
+OpenRouter or a local model) using your own key, under that provider's terms.
+
+NO WARRANTY. THIS SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NONINFRINGEMENT.
+
+LIMITATION OF LIABILITY. IN NO EVENT SHALL STUDIO10A PRODUCTIONS BE LIABLE
+FOR ANY CLAIM, DAMAGES, OR OTHER LIABILITY, WHETHER IN AN ACTION OF
+CONTRACT, TORT OR OTHERWISE, ARISING FROM OR IN CONNECTION WITH THIS
+SOFTWARE - INCLUDING WITHOUT LIMITATION LOST SESSIONS, LOST OR CORRUPTED
+AUDIO, LOST WORK, OR API CREDITS CONSUMED, WHETHER EXPECTED OR NOT.
+
+THIRD-PARTY COMPONENTS. The open-source and third-party components used by
+this software, and their licences, are listed in THIRD-PARTY-NOTICES.txt,
+distributed alongside this file.
+
+This document is a plain-language licence written by the author; it is not
+legal advice.
