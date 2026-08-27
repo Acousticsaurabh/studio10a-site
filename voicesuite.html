@@ -101,6 +101,12 @@ footer b { color:var(--gold); font-weight:600; }
   section { padding:2.8rem 0; }
   .hero { padding:2.8rem 0 2.4rem; }
 }
+.craftgrid { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1px; background:var(--rule); border:1px solid var(--rule); margin-top:1.8rem; }
+.craftcol { background:var(--paper); padding:1.5rem 1.4rem; }
+.craftcol .lab { display:block; font-family:var(--mono); font-size:.62rem; letter-spacing:.2em; text-transform:uppercase; color:var(--blue-deep); padding-bottom:.8rem; border-bottom:1px solid var(--rule); margin-bottom:1rem; }
+.craftcol dt { font-family:var(--geo); font-weight:600; font-size:.8rem; letter-spacing:.06em; text-transform:uppercase; color:var(--gold-deep); margin-top:1.05rem; }
+.craftcol dt:first-of-type { margin-top:0; }
+.craftcol dd { font-size:.83rem; color:var(--soft); line-height:1.55; margin-top:.22rem; }
 </style>
 </head>
 <body id="top">
@@ -188,7 +194,7 @@ footer b { color:var(--gold); font-weight:600; }
       <span class="k">Hosts</span><span class="v">VoiceLab: Studio One, Cubase, Nuendo, REAPER (ARA2). VoiceLab Track + TextLab: any VST3 or AU DAW - Logic Pro and GarageBand included</span>
       <span class="k">Systems</span><span class="v">macOS 11+ (Apple Silicon + Intel, universal) &middot; Windows 10+ (64-bit)</span>
       <span class="k">Requires</span><span class="v">Your own ElevenLabs account and API key (free tier works; generations use your credits)</span>
-      <span class="k">Included</span><span class="v">All three plugins, six-page help guide, uninstaller</span>
+      <span class="k">Included</span><span class="v">All three plugins, seven-page help guide, uninstaller</span>
       <span class="k">Version</span><span class="v">1.5.6 - 21 August 2026 (Mac pkg or manual zip: VST3 + AU &middot; Windows installer or manual zip: VST3)</span>
     </div>
   </div>
@@ -203,6 +209,73 @@ footer b { color:var(--gold); font-weight:600; }
       <span class="k">VoiceLab Track</span><span class="v">Any insert slot, any track - drag audio in or TRANSFER-record what plays, trim, convert; the result is one drag from your timeline</span>
       <span class="k">TextLab</span><span class="v">Any insert slot, any track - type a script, Generate, drag the take onto your timeline. Works in GarageBand too</span>
       <span class="k">Requires</span><span class="v">Just an AU host - Logic Pro and GarageBand both work</span>
+    </div>
+  </div>
+</section>
+
+<section id="craft">
+  <div class="wrap">
+    <span class="kicker">The craft</span>
+    <h2>The parts you notice <em>only when they are missing</em></h2>
+    <p style="color:var(--soft); max-width:60ch;">None of these is a headline. Together they are the difference between a plugin you fight and one you forget you are using - and they are where most of the time went.</p>
+    <div class="craftgrid">
+
+      <div class="craftcol">
+        <span class="lab">Fast</span>
+        <dl>
+          <dt>TRANSFER</dt>
+          <dd>Arm it, press Play. The plugin records what flowed through the track and remembers where on the timeline it came from. No exporting a region first, no round trip through Finder.</dd>
+          <dt>HOST SYNC</dt>
+          <dd>The converted take plays locked to your timeline, in place of the original, without rendering anything. A/B while the loop runs; your track is never touched.</dd>
+          <dt>FOLLOW</dt>
+          <dd>Park the DAW cursor on a line and that source comes up by itself - waveform, cursor, newest take. What you are looking at is always what the DAW is on.</dd>
+          <dt>Convert N clips</dt>
+          <dd>Select twenty clips, press once, get twenty takes. The same one press works on trimmed sources in Track and line by line in TextLab.</dd>
+        </dl>
+      </div>
+
+      <div class="craftcol">
+        <span class="lab">Intuitive</span>
+        <dl>
+          <dt>One brain, three plugins</dt>
+          <dd>One key, one voice library, one history, one settings file. Set it in TextLab and VoiceLab already knows. Sync your voices once.</dd>
+          <dt>The cost before you spend</dt>
+          <dd>A live estimate beside every Convert and Generate, a confirmation before anything expensive, a credit meter in the header. Auditioning a voice is free.</dd>
+          <dt>The trim is the bill</dt>
+          <dd>Only the seconds inside the gold handles are sent. Nothing you will not hear is ever paid for.</dd>
+          <dt>Shortcuts you keep</dt>
+          <dd>Cmd/Ctrl+Return converts or generates. Cmd/Ctrl+1-0 switches versions, and the shortcut is printed on the chip so you never look it up. Both editable.</dd>
+        </dl>
+      </div>
+
+      <div class="craftcol">
+        <span class="lab">Robust</span>
+        <dl>
+          <dt>Split clips keep their own takes</dt>
+          <dd>Clips cut from one recording each hold their own version stack. It cost a rewrite of how takes are stored, and it is why you never go back to re-check a line.</dd>
+          <dt>Word guard</dt>
+          <dd>ENHANCE may add emotion tags. It may not change a word - the plugin checks the model's answer before it lands, whichever model answered.</dd>
+          <dt>No hard-coded models</dt>
+          <dd>ENHANCE asks your provider what it offers, live. Save a second free key and it switches over when one is rate-limited, and tells you which one replied.</dd>
+          <dt>Real errors</dt>
+          <dd>Whatever ElevenLabs actually said is in the status bar, in its own words. Never "something went wrong".</dd>
+        </dl>
+      </div>
+
+      <div class="craftcol">
+        <span class="lab">Clean</span>
+        <dl>
+          <dt>Dark and light, both drawn properly</dt>
+          <dd>Not an inverted afterthought. Matched across all three plugins, one switch in Settings.</dd>
+          <dt>Named the way you would name it</dt>
+          <dd>Every take lands as a WAV called Aakash Aryan G002.wav, in a folder you chose, and nothing is ever overwritten.</dd>
+          <dt>Safe to hand over</dt>
+          <dd>Your API key is never written into a project file, so a session can go to a client or an editor exactly as it is.</dd>
+          <dt>It gets out of the way</dt>
+          <dd>The title card shows once per session. Nothing else in the window is there for decoration.</dd>
+        </dl>
+      </div>
+
     </div>
   </div>
 </section>
