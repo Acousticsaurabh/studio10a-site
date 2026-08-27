@@ -10,7 +10,7 @@ Static site (GitHub Pages, custom domain via Cloudflare DNS/cache). `index.html`
 
 ## Copy rules
 - Voice: plain, producer to producer. "Free, coffee optional" / "buy us a coffee" - never "donation / donationware". Tagline exactly **"Sounds better"**. **Help / help guide**, never "manual". Room 10A: **Gautham**, **Naveen**.
-- Claims: VoiceLab clip mode = ARA2 hosts (Studio One, Cubase, Nuendo, REAPER, Cakewalk). VoiceLab Track + TextLab = any VST3/AU host incl. Logic Pro, GarageBand. No AAX / Pro Tools. Enhance = user's own free Gemini/Groq key; same ElevenLabs per-character pricing as the website (say "saves credits", never "cheaper").
+- Claims: VoiceLab clip mode = ARA2 hosts (Studio One, Nuendo, REAPER, Cakewalk). Cubase is deliberately off this list - Saurabh found Cubase 14 not offering clip effects, Aug 2026. VoiceLab Track + TextLab = any VST3/AU host incl. Logic Pro, GarageBand. No AAX / Pro Tools. Enhance = user's own free Gemini/Groq key; same ElevenLabs per-character pricing as the website (say "saves credits", never "cheaper").
 - Version strings (update each release): hero kicker "version x.y.z", spec row "Version", footer "vx.y.z · release notes" (the only release-notes link - keep it in the footer, low-key).
 
 ## Payhip
