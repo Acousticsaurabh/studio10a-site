@@ -141,7 +141,28 @@ footer b { color:var(--gold); font-weight:600; }
     <p class="shotcap">TextLab - script on the right, your voice library on the left, every generation kept with its text</p>
     <img class="shot if-dark" src="assets/voicesuite/voicelabtrack-dark.png" alt="Studio10a VoiceLab Track - drag audio in, convert, drag it back" loading="lazy" style="margin-top:1.6rem;">
     <img class="shot if-light" src="assets/voicesuite/voicelabtrack-light.png" alt="Studio10a VoiceLab Track - light skin" loading="lazy" style="margin-top:1.6rem;">
-    <p class="shotcap">VoiceLab Track - the source panel with trim, and every conversion one drag from your timeline</p>
+    <p class="shotcap">VoiceLab Track - clips along the timeline, every take stacked in a lane under its own clip</p>
+  </div>
+</section>
+
+<section class="tintband">
+  <div class="wrap">
+    <span class="kicker">New in 1.6.0</span>
+    <h2>Comp your takes <em>the way a DAW does</em></h2>
+    <p style="color:var(--soft); max-width:60ch;">VoiceLab Track's whole clip side was rebuilt. Your captured clips lie along a timeline, and every alternative take sits in a lane directly under the clip it came from. A clip tried in five voices is a column five deep.</p>
+    <img class="shot if-dark" src="assets/voicesuite/lanes-detail.png" alt="Take lanes - clips along a timeline with alternative voices stacked underneath" loading="lazy" style="margin-top:1.4rem;">
+    <img class="shot if-light" src="assets/voicesuite/lanes-detail-light.png" alt="Take lanes - light skin" loading="lazy" style="margin-top:1.4rem;">
+    <p class="shotcap">One colour per voice, held across every clip - click a block and that clip plays that take</p>
+    <div class="cards" style="margin-top:1.8rem;">
+      <div class="card"><span class="no">NEW</span><h3>A take per clip, and it stays</h3><p>Clip one on one voice, clip two on another, clip three on a third - each keeps its own choice. HOST SYNC plays all of them where they belong, so what you hear is what you see lit. Saved with the project, so it is still there tomorrow.</p></div>
+      <div class="card"><span class="no">NEW</span><h3>Jump the cursor, get separate clips</h3><p>Arm TRANSFER, play, and jump the playhead between the takes you care about. Each jump starts a new clip, stamped where you landed. One pass over three takes gives you three clips in the right places instead of one long run with the gaps baked in.</p></div>
+      <div class="card"><span class="no">NEW</span><h3>Everything drags</h3><p>Takes, clips, and rows in the list all drag straight onto your timeline. Shift-click gathers several across clips and carries them out together.</p></div>
+      <div class="card"><span class="no">NEW</span><h3>Scroll and zoom from the scrollbar</h3><p>Drag the middle to slide, drag either end to zoom, double-click to fit. Optional playhead on the lanes, and auto-scroll to follow it while the transport rolls.</p></div>
+    </div>
+    <div class="detailgrid" style="margin-top:2rem;">
+      <div><img class="shot if-dark" src="assets/voicesuite/sourceline-detail.png" alt="Source panel with clip details on one line" loading="lazy"><img class="shot if-light" src="assets/voicesuite/sourceline-detail-light.png" alt="Source panel - light skin" loading="lazy"><p class="shotcap">One clip row instead of two - name, length and where it lands, on a single line</p></div>
+      <div><img class="shot if-dark" src="assets/voicesuite/folded-detail.png" alt="Voices list and generations list folded away" loading="lazy"><img class="shot if-light" src="assets/voicesuite/folded-detail-light.png" alt="Folded panels - light skin" loading="lazy"><p class="shotcap">Fold the voices list and the bottom panel away when you want the room</p></div>
+    </div>
   </div>
 </section>
 
@@ -165,7 +186,7 @@ footer b { color:var(--gold); font-weight:600; }
     <h2>Made by a producer, <em>for producers</em></h2>
     <div class="cards">
       <div class="card"><span class="no">01</span><h3>VoiceLab - voice to voice</h3><p>Put it on a clip, pick a voice, press Convert. The clip plays in the new voice - the original untouched, one click away. Every conversion becomes a VERSION chip: A/B instantly, keep them all in the project.</p></div>
-      <div class="card"><span class="no">02</span><h3>VoiceLab Track - any track, any DAW</h3><p>A normal insert plugin: drop audio in, or arm TRANSFER and simply play - it records what flows through the track, timeline-stamped. Trim, pick a voice, Convert; the take is one drag from your timeline. Logic, GarageBand, Ableton, anything.</p></div>
+      <div class="card"><span class="no">02</span><h3>VoiceLab Track - any track, any DAW</h3><p>A normal insert plugin: drop audio in, or arm TRANSFER and simply play - it records what flows through the track, timeline-stamped, splitting into separate clips wherever you jump the cursor. Every take lands in a lane under its own clip, colour-coded by voice, one drag from your timeline. Logic, GarageBand, Ableton, anything.</p></div>
       <div class="card"><span class="no">03</span><h3>TextLab - text to speech</h3><p>Type or paste a script - Hindi, Tamil, Bangla, English, 70+ languages. On a clip, the clip becomes the speech. On a track, generate and drag. Emotion tags, multiple takes per line, per-line batching. ENHANCE places the tags for you - on your own free Gemini or Groq key, so it costs nothing.</p></div>
       <div class="card"><span class="no">04</span><h3>Your whole voice library</h3><p>Search, folders, favourites and free auditioning across every voice on your ElevenLabs account - synced in one click, shared by all three plugins, with a live credit meter so cost is never a surprise.</p></div>
       <div class="card"><span class="no">05</span><h3>Batch and versions</h3><p>Select many clips, convert them all with one press. One to three takes per generation with reproducible seeds. Twenty versions per clip, each addressable from the keyboard.</p></div>
@@ -188,7 +209,7 @@ footer b { color:var(--gold); font-weight:600; }
       <span class="k">Hosts</span><span class="v">VoiceLab: Studio One, Nuendo, REAPER (ARA2). VoiceLab Track + TextLab: any VST3 or AU DAW - Logic Pro and GarageBand included</span>
       <span class="k">Systems</span><span class="v">macOS 11+ (Apple Silicon + Intel, universal) &middot; Windows 10+ (64-bit)</span>
       <span class="k">Requires</span><span class="v">Your own ElevenLabs account and API key (free tier works; generations use your credits)</span>
-      <span class="k">Included</span><span class="v">All three plugins, six-page help guide, uninstaller</span>
+      <span class="k">Included</span><span class="v">All three plugins, seven-page help guide, uninstaller</span>
       <span class="k">Version</span><span class="v">1.6.0 - 27 August 2026 (Mac pkg or manual zip: VST3 + AU &middot; Windows installer or manual zip: VST3)</span>
     </div>
   </div>
