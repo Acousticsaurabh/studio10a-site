@@ -219,7 +219,7 @@
       <h2><span>Style field</span><span id="modelchip">Suno v5.5</span></h2>
       <p id="style">Pick a genre to start.</p>
       <div class="exwall" id="exwall"></div>
-      <p class="hint" style="margin:.45rem 0 0;font-size:.68rem">These go in Suno's own exclude box, not the style field.</p>
+      <p class="hint" style="margin:.45rem 0 0;font-size:.68rem">These go in Suno's own exclude box, not the style field. Plain tags, comma separated - Suno adds the minus sign itself.</p>
       <div class="gauge" id="gauge"><i id="gbar"></i></div>
       <div class="cc" id="cc"><span><b id="ccn">0</b> / 1000 characters</span><span id="ccx">0 excluded</span></div>
       <div class="checks" id="checks"></div>
@@ -930,7 +930,7 @@ function clauses(){
 function excItems(){const seen=new Set(),o=[];
   D.exc.forEach(id=>{const x=findIn(KIT.exclusions,id); if(x)x.items.forEach(i=>{if(!seen.has(i)){seen.add(i);o.push(i);}});});
   return o;}
-function excStr(items){return items.length? items.map(i=>"‑"+i).join(", ") : "";}
+function excStr(items){return items.length? items.join(", ") : "";}
 const cap=t=>t?t.charAt(0).toUpperCase()+t.slice(1):t;
 function assemble(cl,items){
   const body=cl.map(x=>cap(x.t)).filter(Boolean).join(". ")+".";
@@ -1002,7 +1002,7 @@ function out(){
   const body=buildBody(), items=excItems();
   $("#style").textContent = D.genres.length||D.mode==="part" ? body : "Pick a genre to start.";
   const w=$("#exwall"); w.innerHTML="";
-  items.forEach(i=>w.appendChild(el("span","ex","‑"+i)));
+  items.forEach(i=>w.appendChild(el("span","ex",i)));
   const n=body.length, pct=Math.min(100,Math.round(n/MAXCHARS*100));
   $("#gbar").style.width=pct+"%";
   const g=$("#gauge"); g.className="gauge"+(n>MAXCHARS?" bad":n>MAXCHARS*0.85?" warn":"");
