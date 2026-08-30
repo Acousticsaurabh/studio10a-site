@@ -11,7 +11,7 @@
 
 <style>
   :root{
-    color-scheme:dark;
+    color-scheme:light;
     --gold:#FCBA00; --gold-deep:#6E5526;
     --bg:#DEE1DB; --page:#FBFBF9; --tint:#F3F1EA; --sunk:#ECEAE2;
     --text:#14181E; --soft:#5A6360; --faint:#8A928D; --rule:#CFD3CC;
@@ -33,7 +33,7 @@
       --sat:52%; --lum:66%; --tileL:20%;
     }
   }
-  :root[data-theme="dark"]{
+  :root[data-theme="dark"]{ color-scheme:dark;
     --bg:#0D1014; --page:#171C22; --tint:#1E2128; --sunk:#11151A;
     --text:#E7E9E3; --soft:#9AA39D; --faint:#6E7772; --rule:#2C333A;
     --accent:#FCBA00; --on-accent:#14181E; --gold-deep:#E8C766;
@@ -63,6 +63,8 @@
   :root[data-theme="light"] .wm.light{display:block}
   .sibling{border:1px solid var(--rule);background:var(--page);border-radius:2rem;padding:.4rem .9rem;font-size:.78rem;font-weight:700;color:var(--soft);text-decoration:none;white-space:nowrap;display:inline-flex;align-items:center;gap:.4rem}
   .sibling:hover{border-color:var(--gold);color:var(--gold)}
+  footer a{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule)}
+  footer a:hover{color:var(--gold);border-bottom-color:var(--gold)}
   .kicker{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--accent)}
   h1{font-family:var(--display);font-weight:800;letter-spacing:-.015em;font-size:clamp(1.5rem,4.2vw,2.3rem);line-height:1.05;
      margin:.2rem 0 0;letter-spacing:-.01em}
@@ -202,6 +204,7 @@
   <div class="modes"><a class="sibling" href="/studio2.html">⇄ Studio 2 Prompt Machine</a>
     <button class="mode" id="mSong" aria-pressed="true" type="button">Full song</button>
     <button class="mode" id="mPart" aria-pressed="false" type="button">One part</button>
+      <button class="mode" id="themeBtn" type="button" title="light or dark">◐ theme</button>
   </div>
 </header>
 
@@ -236,11 +239,7 @@
   </div>
 </div>
 
-<footer>
-  Studio 10A Prompt Builder · rebuilt 29 Aug 2026 · vocabulary-first, 1000-character budget enforced<br>
-  Singer names are labels only. They are never written into the prompt - only the voice description goes out.<br>
-  Source: <code>02 Studio10A/Dashboards/Prompt_Builder.html</code> · to upgrade, edit MODEL and KIT at the top of the script.
-</footer>
+<footer>Studio 10A · <a href="https://studio10a.com/">studio10a.com</a> · <a href="/studio2.html">Studio 2 Prompt Machine</a></footer>
 </div>
 
 <script>
@@ -1109,4 +1108,21 @@ function boot(){
     (document.getElementById("picks")||document.body).appendChild(b); }
 }
 if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",boot,{once:true});}else{boot();}
+</script>
+
+<script>
+/* Theme switch. The palette already supports data-theme; nothing was ever setting it.
+   Shares the Prompt Machine's storage key so switching in one tool carries to the other. */
+(function(){
+  var KEY="s10a_pm_theme", d=document.documentElement;
+  try{ var t=localStorage.getItem(KEY); if(t==="light"||t==="dark") d.dataset.theme=t; }catch(e){}
+  var b=document.getElementById("themeBtn");
+  if(!b) return;
+  b.addEventListener("click",function(){
+    var cur=d.dataset.theme||(window.matchMedia&&matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light");
+    var next=cur==="light"?"dark":"light";
+    d.dataset.theme=next;
+    try{ localStorage.setItem(KEY,next); }catch(e){}
+  });
+})();
 </script>
