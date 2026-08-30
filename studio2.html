@@ -9,15 +9,24 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Mulish:wght@400;500;600;700;800;900&display=swap">
 <style>
 :root{
+  color-scheme:dark;
   --gold:#FCBA00; --blue:#41608F; --ink:#0B0D11; --page:#14181E; --card:#1A1F27; --sunk:#0F1319;
   --text:#ECEFE9; --soft:#98A29B; --faint:#6B746E; --rule:#2A313A; --on-gold:#0B0D11;
   --body:Mulish,"Avenir Next",system-ui,-apple-system,sans-serif;
   --mono:"IBM Plex Mono",ui-monospace,"SF Mono",Menlo,monospace; --h:38;
 }
 :root[data-theme="light"]{
+  color-scheme:light;
   --ink:#E6E8E2; --page:#FBFBF9; --card:#FFFFFF; --sunk:#F0F0EA;
   --text:#14181E; --soft:#5A6360; --faint:#8A928D; --rule:#D6D9D2;
 }
+/* scrollbars follow the theme - without color-scheme the browser paints them light */
+*::-webkit-scrollbar{width:11px;height:11px}
+*::-webkit-scrollbar-track{background:var(--sunk)}
+*::-webkit-scrollbar-corner{background:var(--sunk)}
+*::-webkit-scrollbar-thumb{background:var(--rule);border-radius:7px;border:2px solid var(--sunk)}
+*::-webkit-scrollbar-thumb:hover{background:var(--faint)}
+*{scrollbar-width:thin;scrollbar-color:var(--rule) var(--sunk)}
 *{box-sizing:border-box} html,body{height:100%}
 body{margin:0;background:var(--ink);color:var(--text);font-family:var(--body);line-height:1.5;
   -webkit-font-smoothing:antialiased;overflow:hidden}
@@ -161,6 +170,7 @@ header{display:flex;align-items:center;gap:.85rem;padding:.55rem clamp(.7rem,2vw
   <button class="ttl" id="home" title="back to the start">Suno Studio 2 <em>Prompt Machine</em><s>talk to studio · one instruction at a time</s></button>
   <div class="tools">
     <div class="srch"><input id="q" type="search" placeholder="search sitar, rustic, tabla..." autocomplete="off"></div>
+    <a class="tbtn" href="/studio1.html" style="text-decoration:none">⇄ Prompt Builder</a>
     <button class="tbtn" id="clearBtn" title="clear search, filter and selection">⟲ clear</button>
     <button class="tbtn" id="resetBtn" title="wipe favourites and saved preferences too">⌫ reset all</button>
     <button class="tbtn" id="themeBtn">◐ theme</button>
