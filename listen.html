@@ -252,7 +252,7 @@ function drawMeters() {
   // reporting it as "not sending" would send you chasing a fault that isn't there.
   const quiet = Math.max(disp[0], disp[1]) < 0.0005;
   if (!connected) {
-    n.textContent = 'Not connected \u2014 press the button above.';
+    n.textContent = 'Not connected. Press the button above.';
     n.className = 'nosig';
   } else if (bridgeUdpError) {
     n.textContent = bridgeUdpError;
@@ -261,13 +261,13 @@ function drawMeters() {
     // Deliberately keyed on the counter still MOVING, not on it being non-zero. Keyed
     // on non-zero, a stream that ran and then stopped looks identical to one that never
     // started, and the page blames itself for a REAPER-side problem.
-    n.textContent = 'Connected, but nothing is arriving from REAPER. Check the ReaStream FX is set to *send*, pointed at 127.0.0.1 port 58710 \u2014 and that REAPER is playing.';
+    n.textContent = 'Connected, but no audio is arriving from the studio yet.';
     n.className = 'nosig warn';
   } else if (!flowing) {
-    n.textContent = 'Bridge is receiving from REAPER, but audio isn\u2019t reaching this page.';
+    n.textContent = 'The studio is sending, but the audio is not reaching this page.';
     n.className = 'nosig warn';
   } else if (quiet) {
-    n.textContent = 'Connected \u2014 stream is silent. Is REAPER playing?';
+    n.textContent = 'Connected. The studio is not playing anything right now.';
     n.className = 'nosig';
   } else {
     n.textContent = 'Receiving audio';
