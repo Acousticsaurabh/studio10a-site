@@ -1,0 +1,524 @@
+<!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Studio10a Live Stream</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600&family=Mulish:wght@400;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: dark;
+    --gold:#FCBA00; --gold-deep:#6E5526;
+    --ink:#0E1116; --panel:#161A21; --rule:#262B34;
+    --text:#E8E6DF; --soft:#9AA0A8; --faint:#6B7280;
+    --geo:"Jost","Futura","Century Gothic",system-ui,sans-serif;
+    --body:"Mulish","Avenir Next","Helvetica Neue",system-ui,-apple-system,sans-serif;
+    --mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; min-height:100vh; display:grid; place-items:center; padding:24px 16px;
+         background:var(--ink); color:var(--text); font:15px/1.55 var(--body); }
+  .card { width:min(92vw,430px); background:var(--panel); border:1px solid var(--rule);
+          border-radius:16px; padding:30px 26px 26px; text-align:center; }
+  .card.wide { width:min(96vw,780px); }
+  .mark { display:block; margin:0 auto 18px; height:26px; width:auto; opacity:.95; }
+  .kicker { font-family:var(--mono); font-size:.6rem; letter-spacing:.24em;
+            text-transform:uppercase; color:var(--gold); margin-bottom:10px; }
+  h1 { margin:0 0 6px; font-family:var(--geo); font-size:20px; font-weight:500;
+       letter-spacing:.01em; }
+  .sub { color:var(--soft); font-size:13px; margin-bottom:24px; }
+  button { width:100%; padding:14px; font-size:15px; font-weight:600; cursor:pointer;
+           font-family:var(--body); border:0; border-radius:11px;
+           background:var(--gold); color:#14181E; transition:background .18s ease; }
+  button:hover { background:#FFC92B; }
+  button:disabled { background:#242932; color:var(--faint); cursor:default; }
+  .row { display:flex; justify-content:space-between; font-size:12px; color:var(--soft);
+         margin-top:18px; padding-top:15px; border-top:1px solid var(--rule); }
+  .dot { display:inline-block; width:8px; height:8px; border-radius:50%;
+         background:#3A4049; margin-right:7px; vertical-align:middle; }
+  .live .dot { background:var(--gold); box-shadow:0 0 0 3px rgba(252,186,0,.16); }
+  label { display:block; margin-top:17px; font-size:11px; letter-spacing:.06em;
+          text-transform:uppercase; font-family:var(--mono); color:var(--faint);
+          text-align:left; }
+  input[type=range] { width:100%; margin-top:7px; accent-color:var(--gold); }
+  .meters { margin-top:20px; }
+  .m { display:flex; align-items:center; gap:9px; margin:5px 0; }
+  .m span { width:12px; font-size:10px; font-family:var(--mono); color:var(--faint);
+            text-align:right; }
+  .track { position:relative; flex:1; height:9px; border-radius:5px;
+           background:var(--ink); border:1px solid var(--rule); overflow:hidden; }
+  .fill { position:absolute; inset:0 auto 0 0; width:0%;
+          background:linear-gradient(90deg,#6E5526 0%,var(--gold) 62%,#FF8A3D 84%,#FF5E68 100%);
+          transition:width .05s linear; }
+  .scale { display:flex; justify-content:space-between; font-size:9px;
+           font-family:var(--mono); color:#454B55; margin:3px 0 0 21px; }
+  .nosig { color:var(--faint); font-size:11px; margin-top:9px; }
+  .nosig.warn { color:var(--gold); }
+  .talk { margin-top:18px; background:#242932; color:var(--text); }
+  .talk:hover { background:#2E343E; }
+  .talk.on { background:#E0435A; color:#fff; }
+  .talk.on:hover { background:#F05A70; }
+  .talkmsg { font-size:11px; color:var(--faint); margin-top:9px; min-height:15px; }
+  .vid { margin-top:14px; background:#242932; color:var(--text); }
+  .vid:hover { background:#2E343E; }
+  #vidbox { margin-top:14px; }
+  #vidbox iframe { width:100%; height:min(60vh,430px); border:1px solid var(--rule);
+                   border-radius:11px; background:var(--ink); display:block; }
+  .hr { border:0; border-top:1px solid var(--rule); margin:22px 0 0; }
+  .foot { margin-top:20px; font-size:10px; font-family:var(--mono); letter-spacing:.14em;
+          text-transform:uppercase; color:#454B55; }
+  .foot b { color:var(--soft); font-weight:400; }
+</style>
+<div class="card">
+  <img class="mark" src="assets/wordmark.png" alt="Studio10a">
+  <div class="kicker">Live from the studio</div>
+  <h1>Listening session</h1>
+  <div class="sub">Headphones, please. Speakers will feed back into the talkback.</div>
+  <button id="go">Click to Listen</button>
+  <label>Volume <input id="vol" type="range" min="0" max="1" step="0.01" value="0.9"></label>
+  <label>Buffer <span id="buflabel">180 ms</span>
+    <input id="buf" type="range" min="60" max="600" step="20" value="180"></label>
+  <div class="meters">
+    <div class="m"><span>L</span><div class="track"><div class="fill" id="mL"></div></div></div>
+    <div class="m"><span>R</span><div class="track"><div class="fill" id="mR"></div></div></div>
+    <div class="scale"><i>-60</i><i>-40</i><i>-20</i><i>-6</i><i>0</i></div>
+    <div class="nosig" id="nosig">Waiting for audio&hellip;</div>
+  </div>
+  <button id="talk" class="talk" disabled>Talk to the studio</button>
+  <div class="talkmsg" id="talkmsg"></div>
+  <div id="videowrap" style="display:none">
+    <hr class="hr">
+    <button id="joinvid" class="vid">Join video call</button>
+    <div class="talkmsg" id="vidmsg"></div>
+    <div id="vidbox"></div>
+  </div>
+  <div class="row" id="status">
+    <span><span class="dot"></span><span id="state">Not connected</span></span>
+    <span id="fmt"></span>
+  </div>
+  <div class="foot"><b>Studio10a Productions</b> &middot; Sounds better</div>
+</div>
+<script>
+// No session in the link means there is nothing to connect to. Say so plainly rather
+// than letting the page sit on "Not connected" as though something were broken.
+
+// Audio arrives as: [uint8 channels][uint32le sampleRate][float32 samples, NON-interleaved]
+// It is fed to an AudioWorklet that keeps its own queue, so network jitter doesn't
+// turn into dropouts -- the worklet plays silence on underrun instead of glitching.
+const WORKLET = `
+class Player extends AudioWorkletProcessor {
+  constructor() {
+    super();
+    this.q = [];
+    this.queued = 0;
+    this.target = 0;
+    this.playing = false;
+    this.port.onmessage = (e) => {
+      if (e.data.target !== undefined) { this.target = e.data.target; return; }
+      this.q.push(e.data.ch);
+      this.queued += e.data.ch[0].length;
+    };
+  }
+  process(inputs, outputs) {
+    const out = outputs[0];
+    const need = out[0].length;
+    if (!this.playing) {
+      if (this.queued < this.target) { for (const c of out) c.fill(0); return true; }
+      this.playing = true;
+    }
+    let done = 0;
+    while (done < need) {
+      if (!this.q.length) {
+        for (const c of out) c.fill(0, done);
+        this.playing = false;
+        this.port.postMessage({ under: true });
+        return true;
+      }
+      const blk = this.q[0];
+      const avail = blk[0].length;
+      const take = Math.min(avail, need - done);
+      for (let c = 0; c < out.length; c++) {
+        const src = blk[Math.min(c, blk.length - 1)];
+        out[c].set(src.subarray(0, take), done);
+      }
+      if (take === avail) { this.q.shift(); }
+      else { for (let c = 0; c < blk.length; c++) blk[c] = blk[c].subarray(take); }
+      this.queued -= take;
+      done += take;
+    }
+    return true;
+  }
+}
+registerProcessor('player', Player);
+`;
+
+// The session details ride in the URL FRAGMENT, not the query string, so the studio's
+// address and access key are never sent to this site's web server and never appear in
+// its logs. The browser keeps everything after the # to itself.
+//
+//   https://studio10a.com/listen.html#h=HOST&k=KEY&r=ROOM&p=PASS
+//
+// h = the studio's public address, k = access key, r/p = the video room (both optional).
+const SESSION = (function () {
+  const out = {};
+  (location.hash || '').replace(/^#/, '').split('&').forEach(function (part) {
+    const i = part.indexOf('=');
+    if (i > 0) out[part.slice(0, i)] = decodeURIComponent(part.slice(i + 1));
+  });
+  return out;
+})();
+const HOST = SESSION.h || '';
+const K = SESSION.k || '';
+const VDO_ROOM = SESSION.r || '', VDO_PASS = SESSION.p || '';
+// Stats live on the studio's machine, not on this website. Without a session there
+// is nothing to poll, so the pollers are never started rather than 404ing in a loop.
+const STATS_URL = HOST ? 'https://' + HOST + '/stats?k=' + encodeURIComponent(K) : '';
+let ctx, node, gain, ws, sp;
+let useWorklet = false;
+// Fallback queue, used when AudioWorklet isn't available.
+let q = [], queued = 0, playing = false, target = 0;
+const el = (id) => document.getElementById(id);
+
+function setTarget() {
+  target = ctx ? ctx.sampleRate * el('buf').value / 1000 : 0;
+  if (useWorklet && node) node.port.postMessage({ target });
+}
+
+el('buf').oninput = () => { el('buflabel').textContent = el('buf').value + ' ms'; setTarget(); };
+el('vol').oninput = () => { if (gain) gain.gain.value = +el('vol').value; };
+
+function pushAudio(ch) {
+  if (useWorklet) { node.port.postMessage({ ch }, ch.map(a => a.buffer)); return; }
+  q.push(ch); queued += ch[0].length;
+}
+
+// Pulls from the queue into an output buffer. Shared shape with the worklet: play
+// silence until enough is buffered, and on underrun drop back to re-buffering rather
+// than stuttering through fragments.
+function fill(out, need) {
+  if (!playing) { if (queued < target) { for (const c of out) c.fill(0); return; } playing = true; }
+  let done = 0;
+  while (done < need) {
+    if (!q.length) { for (const c of out) c.fill(0, done); playing = false; return; }
+    const blk = q[0], avail = blk[0].length, take = Math.min(avail, need - done);
+    for (let c = 0; c < out.length; c++) out[c].set(blk[Math.min(c, blk.length - 1)].subarray(0, take), done);
+    if (take === avail) q.shift();
+    else for (let c = 0; c < blk.length; c++) blk[c] = blk[c].subarray(take);
+    queued -= take; done += take;
+  }
+}
+
+// --- level meter -------------------------------------------------------------
+// Peaks are collected per packet and drained by a display loop that falls back
+// smoothly, so the bars read like a real meter instead of flickering per packet.
+const peaks = [0, 0];
+const disp = [0, 0];
+let lastAudio = 0;
+
+// The bridge is polled separately from the audio stream so the page can tell the two
+// failure modes apart: "the browser isn't connected to the bridge" versus "the bridge
+// is fine but REAPER isn't sending it anything". Those need completely different fixes,
+// and without this the page shows the same 'waiting' message for both.
+let bridgePackets = -1, bridgeReceiving = false, bridgeUdpError = '';
+if (STATS_URL) setInterval(async () => {
+  try {
+    const r = await fetch(STATS_URL, { cache: 'no-store' });
+    const s = await r.json();
+    bridgeReceiving = (bridgePackets >= 0 && s.packets > bridgePackets);
+    bridgePackets = s.packets;
+    bridgeUdpError = s.udp_error || '';
+  } catch (e) { bridgeReceiving = false; }
+}, 1000);
+
+function dbToPct(v) {
+  if (v <= 0) return 0;
+  const db = 20 * Math.log10(v);          // 1.0 -> 0 dB
+  return Math.max(0, Math.min(100, (db + 60) / 60 * 100));  // -60..0 dB across the bar
+}
+
+function drawMeters() {
+  const bars = [el('mL'), el('mR')];
+  for (let c = 0; c < 2; c++) {
+    disp[c] = Math.max(peaks[c], disp[c] * 0.85);  // instant attack, gentle release
+    peaks[c] = 0;
+    bars[c].style.width = dbToPct(disp[c]).toFixed(1) + '%';
+  }
+  const gap = performance.now() - lastAudio;
+  const n = el('nosig');
+  const connected = ws && ws.readyState === 1;
+  const flowing = lastAudio && gap < 1500;
+  // -66 dBFS. Below this the stream is audibly nothing, but it is still a live stream --
+  // reporting it as "not sending" would send you chasing a fault that isn't there.
+  const quiet = Math.max(disp[0], disp[1]) < 0.0005;
+  if (!connected) {
+    n.textContent = 'Not connected \u2014 press the button above.';
+    n.className = 'nosig';
+  } else if (bridgeUdpError) {
+    n.textContent = bridgeUdpError;
+    n.className = 'nosig warn';
+  } else if (!bridgeReceiving) {
+    // Deliberately keyed on the counter still MOVING, not on it being non-zero. Keyed
+    // on non-zero, a stream that ran and then stopped looks identical to one that never
+    // started, and the page blames itself for a REAPER-side problem.
+    n.textContent = 'Connected, but nothing is arriving from REAPER. Check the ReaStream FX is set to *send*, pointed at 127.0.0.1 port 58710 \u2014 and that REAPER is playing.';
+    n.className = 'nosig warn';
+  } else if (!flowing) {
+    n.textContent = 'Bridge is receiving from REAPER, but audio isn\u2019t reaching this page.';
+    n.className = 'nosig warn';
+  } else if (quiet) {
+    n.textContent = 'Connected \u2014 stream is silent. Is REAPER playing?';
+    n.className = 'nosig';
+  } else {
+    n.textContent = 'Receiving audio';
+    n.className = 'nosig';
+  }
+  requestAnimationFrame(drawMeters);
+}
+requestAnimationFrame(drawMeters);
+
+// --- sample-rate conversion -------------------------------------------------
+// The stream's rate (whatever REAPER runs at) rarely matches the browser's
+// AudioContext rate. Feeding samples across that gap untouched plays them at the
+// wrong speed -- 44.1k into a 48k context runs ~8.8% fast, roughly a semitone and a
+// half sharp. Linear interpolation is plenty for monitoring, but it has to carry its
+// fractional read position and the previous packet's last sample across packet
+// boundaries, otherwise every packet edge becomes a tiny click.
+const rs = { pos: 0, tail: null };
+
+function resample(ch, fromRate, toRate) {
+  if (!fromRate || !toRate || fromRate === toRate) { rs.pos = 0; rs.tail = null; return ch; }
+  const ratio = fromRate / toRate;
+  const nch = ch.length, n = ch[0].length;
+
+  // Work in a buffer that begins with the PREVIOUS packet's last sample:
+  //   buf = [prevLast, s0, s1, ... s(n-1)]      (length n+1)
+  // Read positions are indices into that buffer, so the interval between packets is a
+  // normal interpolation step like any other. The carry is then measured from buf[n]
+  // (this packet's last sample), which is exactly index 0 of the next buffer.
+  const src = [];
+  for (let c = 0; c < nch; c++) {
+    const s = new Float32Array(n + 1);
+    s[0] = rs.tail ? rs.tail[c] : ch[c][0];
+    s.set(ch[c], 1);
+    src.push(s);
+  }
+
+  const pos = [];
+  let p = rs.pos;
+  while (p < n) { pos.push(p); p += ratio; }
+  rs.pos = p - n;
+
+  const out = [];
+  for (let c = 0; c < nch; c++) {
+    const s = src[c], dst = new Float32Array(pos.length);
+    for (let i = 0; i < pos.length; i++) {
+      const x = pos[i], i0 = Math.floor(x), f = x - i0;
+      const a = s[i0], b = s[i0 + 1];
+      dst[i] = a + (b - a) * f;
+    }
+    out.push(dst);
+  }
+  rs.tail = ch.map(a => a[n - 1]);
+  return out;
+}
+
+// --- talkback ----------------------------------------------------------------
+// getUserMedia needs a secure context -- the same rule that governs AudioWorklet. Over
+// plain HTTP to a LAN address (WiFi mode) navigator.mediaDevices is simply absent, so
+// this says why instead of failing with a cryptic error.
+let talking = false, micStream = null, micProc = null, micSrc = null, micMute = null;
+const talkMsg = (t) => { el('talkmsg').textContent = t || ''; };
+
+el('talk').onclick = () => {
+  if (talking) { stopTalk(); return; }
+  if (!window.isSecureContext || !navigator.mediaDevices) {
+    talkMsg('Talkback needs the secure Internet link. Plain WiFi cannot use the mic.');
+    return;
+  }
+  if (!ws || ws.readyState !== 1) { talkMsg('Press "Click to Listen" first.'); return; }
+  talkMsg('Asking for the line...');
+  ws.send(JSON.stringify({ cmd: 'talk_start' }));
+};
+
+async function beginCapture() {
+  try {
+    micStream = await navigator.mediaDevices.getUserMedia({
+      audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true }
+    });
+  } catch (e) {
+    talkMsg('Microphone blocked. Allow mic access for this page, then try again.');
+    ws.send(JSON.stringify({ cmd: 'talk_stop' }));
+    return;
+  }
+  micSrc = ctx.createMediaStreamSource(micStream);
+  micProc = ctx.createScriptProcessor(2048, 1, 1);
+  micProc.onaudioprocess = (e) => {
+    if (!talking || !ws || ws.readyState !== 1) return;
+    const inp = e.inputBuffer.getChannelData(0);
+    const buf = new ArrayBuffer(8 + inp.length * 4);
+    const dv = new DataView(buf);
+    dv.setUint8(0, 1);
+    dv.setUint32(4, ctx.sampleRate, true);
+    new Float32Array(buf, 8).set(inp);   // 8 again: same alignment rule as playback
+    ws.send(buf);
+  };
+  micSrc.connect(micProc);
+  // A ScriptProcessor only runs while it is connected to a destination. Route it
+  // through a silent gain so it processes without the client hearing themselves.
+  micMute = ctx.createGain();
+  micMute.gain.value = 0;
+  micProc.connect(micMute);
+  micMute.connect(ctx.destination);
+  talking = true;
+  el('talk').textContent = 'Talking, click to stop';
+  el('talk').classList.add('on');
+  talkMsg('Your mic is live. Wear headphones or the studio will hear an echo.');
+}
+
+function stopTalk() {
+  const was = talking;
+  talking = false;
+  el('talk').textContent = 'Talk to the studio';
+  el('talk').classList.remove('on');
+  talkMsg('');
+  for (const n of [micProc, micSrc, micMute]) { try { if (n) n.disconnect(); } catch (e) {} }
+  try { if (micStream) micStream.getTracks().forEach(t => t.stop()); } catch (e) {}
+  micProc = micSrc = micStream = micMute = null;
+  if (was && ws && ws.readyState === 1) ws.send(JSON.stringify({ cmd: 'talk_stop' }));
+}
+
+// --- video call, embedded ---------------------------------------------------
+// An iframe rather than a link out, so the client has one page for everything: the
+// mix, their mic, and the faces. Camera and mic inside an iframe are delegated from
+// the TOP-LEVEL page, so this needs the secure Internet link exactly like talkback --
+// on a plain http:// LAN address the browser refuses regardless of the allow list.
+// A link with no session in it is not a broken page, it is a link that has expired or
+// was copied without its fragment. Say that, rather than leaving a dead Listen button.
+if (!HOST || !K) {
+  el('go').disabled = true;
+  el('go').textContent = 'No session in this link';
+  el('state').textContent = 'No session';
+  el('nosig').textContent = 'Ask the studio to send the link again.';
+  el('nosig').className = 'nosig warn';
+} 
+
+if (VDO_ROOM) el('videowrap').style.display = 'block';
+
+el('joinvid').onclick = () => {
+  if (!window.isSecureContext) {
+    el('vidmsg').textContent =
+      'The video call needs the secure Internet link, same as the mic.';
+    return;
+  }
+  el('joinvid').disabled = true;
+  el('joinvid').textContent = 'Video call joined';
+  document.querySelector('.card').classList.add('wide');
+  const f = document.createElement('iframe');
+  f.allow = 'camera; microphone; display-capture; autoplay; fullscreen';
+  // The password is omitted entirely when blank rather than sent empty. VDO.Ninja
+  // derives the room from this setting, so an empty `&password=` and no `&password`
+  // at all are NOT the same room -- get it wrong and the client sits alone in a room
+  // that looks fine, which is a miserable thing to debug mid-session.
+  f.src = 'https://vdo.ninja/?room=' + encodeURIComponent(VDO_ROOM)
+        + (VDO_PASS ? '&password=' + encodeURIComponent(VDO_PASS) : '');
+  el('vidbox').appendChild(f);
+  el('vidmsg').textContent = 'Headphones please, or the studio hears an echo.';
+};
+
+el('go').onclick = async () => {
+  el('go').disabled = true;
+  el('go').textContent = 'Connecting...';
+
+  // Ask the bridge what rate REAPER is running at, and try to open the AudioContext
+  // there -- an exact match means no resampling at all. Browsers may refuse a given
+  // rate, hence the fallback; the resampler covers whatever gap remains.
+  let wantRate = 0;
+  if (STATS_URL) try {
+    const s = await (await fetch(STATS_URL, { cache: 'no-store' })).json();
+    if (s && s.sample_rate > 0) wantRate = s.sample_rate;
+  } catch (e) {}
+
+  const AC = window.AudioContext || window.webkitAudioContext;
+  try {
+    ctx = wantRate ? new AC({ sampleRate: wantRate }) : new AC();
+  } catch (e) {
+    ctx = new AC();
+  }
+  await ctx.resume();
+
+  gain = ctx.createGain();
+  gain.gain.value = +el('vol').value;
+  gain.connect(ctx.destination);
+
+  // AudioWorklet requires a secure context (HTTPS or localhost). Over plain HTTP to a
+  // LAN address -- which is exactly how a phone reaches this -- it is simply absent, so
+  // fall back to ScriptProcessorNode. Deprecated, but it works everywhere and needs no
+  // secure context, which is the whole point here.
+  useWorklet = !!(window.isSecureContext && ctx.audioWorklet);
+
+  if (useWorklet) {
+    const url = URL.createObjectURL(new Blob([WORKLET], { type: 'application/javascript' }));
+    await ctx.audioWorklet.addModule(url);
+    node = new AudioWorkletNode(ctx, 'player', { outputChannelCount: [2] });
+    node.connect(gain);
+  } else {
+    sp = ctx.createScriptProcessor(2048, 1, 2);
+    sp.onaudioprocess = (e) => {
+      const b = e.outputBuffer;
+      fill([b.getChannelData(0), b.getChannelData(1)], b.length);
+    };
+    sp.connect(gain);
+  }
+  setTarget();
+
+  ws = new WebSocket('wss://' + HOST + '/ws?k=' + encodeURIComponent(K));
+  ws.binaryType = 'arraybuffer';
+
+  ws.onopen = () => {
+    el('go').textContent = 'Listening';
+    el('state').textContent = 'Connected';
+    el('status').classList.add('live');
+    el('talk').disabled = false;
+  };
+  ws.onerror = () => { el('state').textContent = 'Connection failed'; };
+  ws.onclose = () => {
+    el('state').textContent = 'Disconnected';
+    el('status').classList.remove('live');
+    el('go').disabled = false;
+    el('go').textContent = 'Reconnect';
+    el('talk').disabled = true;
+    stopTalk();
+  };
+  ws.onmessage = (ev) => {
+    if (typeof ev.data === 'string') {          // control message, not audio
+      try {
+        const m = JSON.parse(ev.data);
+        if (m.talk === 'granted') beginCapture();
+        else if (m.talk === 'busy') talkMsg('Someone else has the line right now.');
+        else if (m.talk === 'released') stopTalk();
+      } catch (e) {}
+      return;
+    }
+    const dv = new DataView(ev.data);
+    const nch = dv.getUint8(0);
+    const rate = dv.getUint32(4, true);
+    const pcm = new Float32Array(ev.data, 8);  // 8, not 5: Float32Array needs a 4-byte-aligned offset
+    const per = pcm.length / nch;
+    const ch = [];
+    for (let c = 0; c < nch; c++) ch.push(pcm.slice(c * per, (c + 1) * per));
+    el('fmt').textContent = nch + 'ch / ' + rate + ' Hz'
+      + (ctx && ctx.sampleRate !== rate ? ' \u2192 ' + Math.round(ctx.sampleRate) : '');
+    // Peaks are read here, before pushAudio() -- in worklet mode the buffers are
+    // transferred to the audio thread and can no longer be read from this side.
+    for (let c = 0; c < 2; c++) {
+      const a = ch[Math.min(c, ch.length - 1)];
+      let pk = 0;
+      for (let i = 0; i < a.length; i++) { const v = a[i] < 0 ? -a[i] : a[i]; if (v > pk) pk = v; }
+      if (pk > peaks[c]) peaks[c] = pk;
+    }
+    lastAudio = performance.now();
+    pushAudio(resample(ch, rate, ctx.sampleRate));
+  };
+};
+</script>
