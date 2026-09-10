@@ -159,6 +159,9 @@
   .peek em{font-style:normal;font-family:var(--mono);font-size:.68rem;margin-left:auto;font-variant-numeric:tabular-nums}
 
   .card{background:var(--page);border:1px solid var(--rule);border-radius:.6rem;padding:.8rem .85rem;overflow:auto}
+  .modelpick{display:inline-flex;gap:.25rem}
+  .modelpick button{font:inherit;letter-spacing:.06em;text-transform:none;border:1px solid var(--rule);background:var(--page);color:var(--soft);border-radius:1rem;padding:.12rem .5rem;cursor:pointer}
+  .modelpick button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
   .card h2{font-family:var(--mono);font-size:.61rem;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);
            margin:0 0 .45rem;font-weight:500;display:flex;justify-content:space-between;gap:.6rem}
   #style{font-family:var(--mono);font-size:.775rem;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:0}
@@ -216,10 +219,10 @@
       <b>Prompt</b><em id="peekcc">0 / 1000</em>
     </div>
     <div class="card">
-      <h2><span>Style field</span><span id="modelchip">Suno v5.5</span></h2>
+      <h2><span>Style field</span><span class="modelpick" id="modelpick"></span></h2>
       <p id="style">Pick a genre to start.</p>
       <div class="exwall" id="exwall"></div>
-      <p class="hint" style="margin:.45rem 0 0;font-size:.68rem">These go in Suno's own exclude box, not the style field. Plain tags, comma separated - Suno adds the minus sign itself.</p>
+      <p class="hint" style="margin:.45rem 0 0;font-size:.68rem">These go in Suno's own Exclude styles box - Advanced tab, under More Options - not the style field. Plain tags, comma separated - Suno adds the minus sign itself.</p>
       <div class="gauge" id="gauge"><i id="gbar"></i></div>
       <div class="cc" id="cc"><span><b id="ccn">0</b> / 1000 characters</span><span id="ccx">0 excluded</span></div>
       <div class="checks" id="checks"></div>
@@ -233,7 +236,7 @@
     </div>
     <div class="meta">
       <div class="metabox">Take name · <b id="takename">-</b></div>
-      <div class="metabox">Sliders · Weirdness <b>22%</b> · Style <b>48%</b> · Audio <b>45%</b></div>
+      <div class="metabox">More Options · Weirdness <b>22%</b> · Style <b>48%</b> · Variety <b>Normal</b> · Max Mode <b>off</b></div>
       <button class="btn" id="copyLog" type="button">Copy the full brief</button>
     </div>
   </div>
@@ -244,7 +247,12 @@
 
 <script>
 /* ================= MODEL + LIMITS + KIT - the only things to edit ================= */
-const MODEL = "Suno v5.5";
+/* The v6 lineup, 9 Sep 2026. v5.5 and everything before it are gone from Suno's picker. */
+const MODELS=[
+  {id:"v6",      note:"The reliable one. Every brief starts here."},
+  {id:"v6-wild", note:"Less predictable, more varied. The second pass, when v6 played it safe."},
+  {id:"v6-mini", note:"The free, faster one. Sketches only, never a take that goes to a client."}
+];
 const MAXCHARS = 1000;
 
 const KIT = {
@@ -479,7 +487,7 @@ const KIT = {
 };
 
 /* ================= state ================= */
-const D = {mode:"song",genres:[],era:"",feel:{scale:2,energy:2,light:2,era:2,density:2},
+const D = {mode:"song",model:"v6",genres:[],era:"",feel:{scale:2,energy:2,light:2,era:2,density:2},
   vtab:"type",slot:0,cast:[null,null,null],trade:"alt",lyrics:"",
   chorus:null,inst:[],move:"nomove",prod:null,
   lang:"Hindi",root:"",tonality:"major",bpm:"",meter:"",exc:[],project:"",song:"",
@@ -496,6 +504,14 @@ function findIn(arr,id){return arr.find(x=>x.id===id);}
 function instText(id){for(const a of Object.values(KIT.instruments)){const f=a.find(i=>i.id===id);if(f)return f.t;}
   const g=KIT.partInst.find(i=>i.id===id); return g?g.t:"";}
 function allSingers(){return [].concat(...Object.values(KIT.singers));}
+/* Vocal Gender toggle on the v6 Create page - set only when the whole cast is one gender. */
+function vocalGender(){
+  const cast=D.cast.filter(Boolean); if(!cast.length) return "";
+  const gs=new Set(cast.map(c=>{
+    if(c.kind==="singer"){ for(const [g,arr] of Object.entries(KIT.singers)) if(arr.some(x=>x.id===c.id)) return g; return ""; }
+    return (c.id==="courty"||c.id==="soprano") ? "Female" : ""; }));
+  return gs.size===1 && !gs.has("") ? [...gs][0] : "";
+}
 function castEntry(c){ if(!c) return null;
   return c.kind==="singer" ? allSingers().find(x=>x.id===c.id) : findIn(KIT.voiceTypes,c.id); }
 function castText(c){ const e=castEntry(c); return e?e.t:""; }
@@ -1011,7 +1027,10 @@ function out(){
   $("#peekcc").textContent=n+" / "+MAXCHARS;
   $("#trim").classList.toggle("hidden", n<=MAXCHARS);
   $("#takename").textContent=takeName();
-  $("#modelchip").textContent=MODEL;
+  const mp=$("#modelpick"); mp.innerHTML="";
+  MODELS.forEach(m=>{const b=el("button",null,m.id);b.type="button";b.title=m.note;
+    b.setAttribute("aria-pressed",D.model===m.id?"true":"false");
+    b.onclick=()=>{D.model=m.id;out();save();}; mp.appendChild(b);});
   const cw=$("#checks"); cw.innerHTML="";
   warnings().forEach(x=>{const r=el("div","ck "+x.k);
     r.appendChild(el("b",null,x.k==="clash"?"CLASH":x.k==="gap"?"GAP":"OK"));
@@ -1048,15 +1067,20 @@ function briefTask(){
   L.push(`${proj}, ${song}.`,"");
   L.push("WHAT I NEED");
   L.push(D.mode==="part"
-    ? "One part for Suno Studio. Two takes come per generation - run it twice if none of them land."
+    ? `One part for Suno Studio, on ${D.model} - pick it in the chat bar's model menu. Two takes come per generation - run it twice if none of them land.`
     : "Suno returns two takes per generation. Run it once, send me both. Run it again only if neither lands. mp3 only, back to me as links, and do not stem-split anything yet.");
   L.push("");
   L.push(`STYLE FIELD - paste exactly as it is (${body.length} characters, limit ${MAXCHARS})`);
   L.push(body,"");
   if(negs){ L.push(`EXCLUDE BOX - Suno's own negative field, not the style field (${negs.length} characters)`);
     L.push(negs,""); }
-  L.push("SLIDERS");
-  L.push("Weirdness 22 · Style Influence 48 · Audio Influence 45","");
+  const mdl=findIn(MODELS,D.model)||MODELS[0];
+  L.push("MODEL");
+  L.push(`${mdl.id} - ${mdl.note}`,"");
+  L.push("MORE OPTIONS - Advanced tab on the Create page");
+  const vg=vocalGender();
+  L.push(`Weirdness 22 · Style Influence 48 · Variety Normal · Max Mode off · Personalize off${vg?` · Vocal Gender ${vg}`:""}`);
+  L.push("Audio Influence 45 only if a reference clip is attached. Duration stays on Auto.","");
   if(cast.length){
     L.push("VOICE I AM AFTER - my reference only, never type these names into Suno");
     L.push(cast.map(castLabel).join(" · ")+(cast.length>1?"   ("+findIn(KIT.trades,D.trade).label+")":""),"");
