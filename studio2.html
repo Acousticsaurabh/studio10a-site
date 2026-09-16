@@ -70,6 +70,18 @@ header{display:flex;align-items:center;gap:.85rem;padding:.55rem clamp(.7rem,2vw
 .mode.alt[aria-pressed="true"]{background:var(--blue);color:#fff;border-color:var(--blue)}
 .mnote{font-size:.72rem;color:var(--faint);margin-left:auto;max-width:34rem;text-align:right}
 @media(max-width:52rem){ .mnote{display:none} }
+.lyrics{background:var(--sunk);border-bottom:1px solid var(--rule);padding:0 clamp(.7rem,2vw,1.3rem)}
+.lyrics summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:.7rem;padding:.45rem 0;font-size:.78rem}
+.lyrics summary::-webkit-details-marker{display:none}
+.lyrics summary::before{content:"\25B8";color:var(--faint);font-size:.7rem}
+.lyrics[open] summary::before{content:"\25BE"}
+.ltag{font-family:var(--mono);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--faint)}
+.lstate{color:var(--faint);font-size:.72rem}
+.lstate.on{color:var(--gold);font-weight:700}
+.lyrics textarea{width:100%;box-sizing:border-box;background:var(--card);border:1px solid var(--rule);border-radius:.45rem;color:var(--text);padding:.55rem .65rem;font-family:var(--mono);font-size:.78rem;line-height:1.55;min-height:6.5rem;resize:vertical}
+.lyrics textarea:focus{outline:none;border-color:var(--gold)}
+.lrow{display:flex;align-items:center;gap:.7rem;flex-wrap:wrap;padding:.45rem 0 .7rem}
+.lhint{font-size:.72rem;color:var(--faint);margin-right:auto}
 
 .main{display:grid;grid-template-columns:13.5rem minmax(0,1fr);min-height:0}
 @media(max-width:60rem){ .main{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr)} }
@@ -203,6 +215,11 @@ header{display:flex;align-items:center;gap:.85rem;padding:.55rem clamp(.7rem,2vw
   <button class="mode" data-m="style"><i>≡</i> Style + exclude</button>
   <span class="mnote" id="mnote"></span>
 </div>
+<details class="lyrics" id="lyricsBox">
+  <summary><span class="ltag">♪ Lyrics</span><span class="lstate" id="lstate"></span></summary>
+  <textarea id="lyrics" spellcheck="false" placeholder="Drop the lyrics here. While this box has text, every prompt in the two chat modes ends with: The lyrics are as follows, and then the words. In Style mode the lyrics get their own copy button for the Lyrics field."></textarea>
+  <div class="lrow"><span class="lhint">Kept in this browser only. Clear it when the song changes.</span><button class="tbtn" id="lyricsClear">✖ clear lyrics</button></div>
+</details>
 
 <div class="main">
   <nav class="rail" id="rail"><div class="railhead">Families</div></nav>
@@ -241,6 +258,8 @@ const CHATONLY={plugin:"paste into studio chat",synth:"paste into studio chat",m
 
 let MODE="convert", FAM=DATA.fams[0][0], GRP="all", Q="", CUR=null;
 let FAVS=[]; try{FAVS=JSON.parse(localStorage.getItem("s10a_pm_favs")||"[]")}catch(e){}
+let LYR=""; try{LYR=localStorage.getItem("s10a_pm_lyrics")||""}catch(e){}
+const lyricsTail=()=>LYR.trim()?"\n\nThe lyrics are as follows:\n"+LYR.trim():"";
 try{const t=localStorage.getItem("s10a_pm_theme"); if(t) document.documentElement.dataset.theme=t;
     const m=localStorage.getItem("s10a_pm_mode"); if(m&&MODES[m]) MODE=m;}catch(e){}
 
@@ -265,12 +284,12 @@ function build(it,mode){
   if(mode==="convert"){
     const keep = V ? " Keep the melody, the words and the timing exactly as they are. Change only the singer."
                    : " Keep the melody, the rhythm and the phrasing exactly as they are, and render it as this one instrument on its own.";
-    return "Convert the selected clip to "+it.b+keep+(it.neg?" "+it.neg:"");
+    return "Convert the selected clip to "+it.b+keep+(it.neg?" "+it.neg:"")+lyricsTail();
   }
   if(mode==="generate"){
     const fit = V ? " Write it to sit in the key and tempo of the project and to follow the existing arrangement."
                   : " Lock it to the tempo and key of the project, let it sit with what is already playing, and keep it to this one instrument on its own.";
-    return "Add a new track and generate "+it.b+fit+(it.neg?" "+it.neg:"");
+    return "Add a new track and generate "+it.b+fit+(it.neg?" "+it.neg:"")+lyricsTail();
   }
   const solo = V ? " One voice alone." : " One instrument alone, no other instruments and no vocals.";
   return cap(it.b)+solo;
@@ -370,6 +389,7 @@ function open(k){
   h+='<div class="tip"><b>'+TIERLABEL[i.t]+'.</b> '+TIERNOTE[i.t]+'</div>';
   if(i.f.indexOf('sing')===0) h+='<div class="tip" style="border-color:var(--gold);background:hsl(43 100% 50% / .12)"><b>Describe the voice, never name a singer.</b> Suno does not follow artist names reliably and filters many of them. What actually travels is the description, which is all this prompt contains.</div>';
   if(i.tip) h+='<div class="tip">'+esc(i.tip).replace(/\n/g,"<br>")+'</div>';
+  if(LYR.trim()&&!chatOnly&&MODE!=="style") h+='<div class="tip" style="border-color:var(--gold)"><b>Lyrics attached.</b> This prompt ends with the words from the Lyrics box, so Studio follows them.</div>';
   h+='<div class="block hero"><div class="bhead"><span class="blabel">'+esc(chatOnly||MODES[MODE].blk)+'</span>'
    +'<button class="copy big" data-c="p">copy</button></div><pre>'+esc(txt)+'</pre></div>';
   if(MODE==="style"&&i.x){
@@ -377,6 +397,10 @@ function open(k){
      +'<button class="copy" data-c="x">copy</button></div><pre>'+esc(i.x)+'</pre></div>'
      +'<div class="block"><div class="bhead"><span class="blabel">both together</span>'
      +'<button class="copy" data-c="b">copy</button></div><pre>'+esc(txt+"\n\nExclude: "+i.x)+'</pre></div>';
+  }
+  if(MODE==="style"&&LYR.trim()&&!chatOnly){
+    h+='<div class="block"><div class="bhead"><span class="blabel">lyrics · paste into the lyrics field</span>'
+     +'<button class="copy" data-c="l">copy</button></div><pre>'+esc(LYR.trim())+'</pre></div>';
   }
   h+='<button class="tbtn" data-fav="1" style="margin-top:.3rem">'+(FAVS.includes(k)?"★ remove from favourites":"☆ add to favourites")+'</button>';
   if(i.f==="custom"){
@@ -386,7 +410,7 @@ function open(k){
   $("#dbody").innerHTML=h;
   $("#detail").classList.add("open"); document.body.classList.add("dopen");
   $("#dbody").querySelectorAll(".copy").forEach(b=>b.onclick=()=>{
-    copy(b.dataset.c==="p"?txt:b.dataset.c==="x"?i.x:(txt+"\n\nExclude: "+i.x),b)});
+    copy(b.dataset.c==="p"?txt:b.dataset.c==="x"?i.x:b.dataset.c==="l"?LYR.trim():(txt+"\n\nExclude: "+i.x),b)});
   const fb=$("#dbody").querySelector("[data-fav]"); if(fb) fb.onclick=()=>{toggleFav(k);open(k)};
   if(i.f==="custom"){
     const eb=$("#dbody").querySelector("[data-edit]"); if(eb) eb.onclick=()=>openCustomForm(i);
@@ -529,6 +553,19 @@ document.querySelectorAll(".mode").forEach(b=>b.onclick=()=>{
   else { CUR=null; $("#dbody").innerHTML=HOME }
 });
 $("#q").addEventListener("input",e=>{Q=e.target.value.trim().toLowerCase();GRP="all";render()});
+/* ---- the lyrics box: one set of words, carried into every chat prompt ---- */
+function lyricsState(){
+  const n=LYR.trim()?LYR.trim().split(/\n/).filter(l=>l.trim()).length:0, el=$("#lstate");
+  el.textContent=n?n+" line"+(n===1?"":"s")+" · every chat prompt now ends with \"The lyrics are as follows\"":"none · prompts go out as they are";
+  el.classList.toggle("on",n>0);
+}
+function lyricsChanged(){
+  try{ if(LYR.trim()) localStorage.setItem("s10a_pm_lyrics",LYR); else localStorage.removeItem("s10a_pm_lyrics"); }catch(e){}
+  lyricsState(); if(CUR) open(CUR);
+}
+$("#lyrics").value=LYR; if(LYR.trim()) $("#lyricsBox").open=true; lyricsState();
+$("#lyrics").addEventListener("input",e=>{LYR=e.target.value;lyricsChanged()});
+$("#lyricsClear").onclick=()=>{LYR="";$("#lyrics").value="";lyricsChanged()};
 $("#themeBtn").onclick=()=>{const d=document.documentElement;
   const now=d.dataset.theme==="light"?"dark":"light"; d.dataset.theme=now;
   try{localStorage.setItem("s10a_pm_theme",now)}catch(e){}};
@@ -555,8 +592,8 @@ function softReset(){
 $("#home").onclick=softReset;
 $("#clearBtn").onclick=softReset;
 $("#resetBtn").onclick=()=>{
-  if(!confirm("Reset everything?\n\nThis clears your starred favourites, the chosen mode and the theme. The prompts themselves are untouched.")) return;
-  try{["s10a_pm_favs","s10a_pm_theme","s10a_pm_mode"].forEach(k=>localStorage.removeItem(k))}catch(e){}
+  if(!confirm("Reset everything?\n\nThis clears your starred favourites, the lyrics box, the chosen mode and the theme. The prompts themselves are untouched.")) return;
+  try{["s10a_pm_favs","s10a_pm_theme","s10a_pm_mode","s10a_pm_lyrics"].forEach(k=>localStorage.removeItem(k))}catch(e){}
   location.reload();
 };
 </script>
