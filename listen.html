@@ -85,33 +85,22 @@
   .expandclose::before { content:""; width:14px; height:14px; background:currentColor;
           -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat;
           mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat; }
-  /* Join and Float share a row; Float only appears when the browser can do
-     Document Picture-in-Picture at all (Chrome/Edge desktop). */
-  .vidrow { display:flex; gap:8px; margin-top:14px; }
-  .vidrow #joinvid { margin-top:0; flex:1; }
-  #floatvid { display:none; flex:0 0 auto; width:auto; margin-top:0; padding:0 14px;
-              align-items:center; gap:7px; font-size:12px; font-weight:500;
-              background:transparent; color:var(--soft); border:1px solid var(--rule); }
-  #floatvid:hover { background:#1E232B; color:var(--text); }
-  #floatvid::before { content:""; width:13px; height:13px; background:currentColor;
-          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat;
-          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat; }
-  /* Call view controls, shown under the video once a call is actually on the page.
-     Idle is the same muted grey as the mute button; active is gold, not the mute
-     button's red, since these are view choices, not a danger state. */
+  /* Call view controls, shown under the video once a call is actually on the page:
+     Expand, then float into a Picture-in-Picture window. Idle is the same muted
+     grey as the mute button; active is gold, not the mute button's red, since
+     these are view choices, not a danger state. */
   .callctrls { display:none; gap:8px; margin-top:10px; }
   .callbtn { width:36px; height:32px; flex:0 0 auto; padding:0; border-radius:8px;
              background:#242932; color:var(--soft); display:grid; place-items:center; }
   .callbtn:hover { background:#2E343E; color:var(--text); }
   .callbtn.on { background:var(--gold); color:#14181E; }
-  #fsbtn::before { content:""; width:15px; height:15px; background:currentColor;
-          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 9V4h5'/><path d='M20 9V4h-5'/><path d='M4 15v5h5'/><path d='M20 15v5h-5'/></svg>") center/contain no-repeat;
-          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 9V4h5'/><path d='M20 9V4h-5'/><path d='M4 15v5h5'/><path d='M20 15v5h-5'/></svg>") center/contain no-repeat; }
   #expandbtn::before { content:""; width:14px; height:14px; background:currentColor;
           -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='5' width='14' height='14' rx='2'/></svg>") center/contain no-repeat;
           mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='5' width='14' height='14' rx='2'/></svg>") center/contain no-repeat; }
-  #floatbtn2 { display:none; }
-  #floatbtn2::before { content:""; width:14px; height:14px; background:currentColor;
+  /* PiP only appears when the browser can do Document Picture-in-Picture at all
+     (Chrome/Edge desktop). */
+  #pipbtn { display:none; }
+  #pipbtn::before { content:""; width:14px; height:14px; background:currentColor;
           -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat;
           mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat; }
   #vidbox .bringback { all:unset; cursor:pointer; color:var(--gold); font-family:var(--body);
@@ -183,16 +172,12 @@
   <div class="talkmsg" id="talkmsg"></div>
   <div id="videowrap" style="display:none">
     <hr class="hr">
-    <div class="vidrow">
-      <button id="joinvid" class="vid">Join video call</button>
-      <button id="floatvid" type="button">Float the call</button>
-    </div>
+    <button id="joinvid" class="vid">Join video call</button>
     <div class="talkmsg" id="vidmsg"></div>
     <div id="vidbox"></div>
     <div class="callctrls" id="callctrls">
-      <button id="fsbtn" class="callbtn" type="button" title="Fullscreen" aria-label="Fullscreen"></button>
       <button id="expandbtn" class="callbtn" type="button" title="Expand" aria-label="Expand"></button>
-      <button id="floatbtn2" class="callbtn" type="button" title="Float the call" aria-label="Float the call"></button>
+      <button id="pipbtn" class="callbtn" type="button" title="Float the call" aria-label="Float the call"></button>
     </div>
   </div>
   <div class="row" id="status">
@@ -577,25 +562,13 @@ el('joinvid').onclick = () => {
   updateCallCtrls();
 };
 
-// --- call view controls: fullscreen, expand, float --------------------------
-// Three ways to get the call out from under a small box: real OS fullscreen
-// (VDO.Ninja's own toolbar comes with it), a page-filling "expand" that needs no
-// OS permission and keeps REAPER one Esc away, and floating the call into its own
-// window. The strip only makes sense once there is actually a call on the page.
+// --- call view controls: expand, float ---------------------------------------
+// Two ways to get the call out from under a small box: a page-filling "expand"
+// that needs no OS permission and keeps REAPER one Esc away, and floating the call
+// into its own window. The strip only makes sense once there is a call on the page.
 function updateCallCtrls() {
   el('callctrls').style.display = el('vidbox').querySelector('iframe') ? 'flex' : 'none';
 }
-
-function isFs() {
-  return (document.fullscreenElement || document.webkitFullscreenElement) === el('vidbox');
-}
-el('fsbtn').onclick = () => {
-  const v = el('vidbox');
-  if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
-  else (v.requestFullscreen || v.webkitRequestFullscreen).call(v);
-};
-['fullscreenchange', 'webkitfullscreenchange'].forEach((ev) =>
-  document.addEventListener(ev, () => el('fsbtn').classList.toggle('on', isFs())));
 
 function closeExpand() {
   el('vidbox').classList.remove('expanded');
@@ -620,13 +593,10 @@ document.addEventListener('keydown', (e) => {
 
 // --- float the call into an always-on-top window -----------------------------
 // Document Picture-in-Picture only -- Safari, Firefox and phones never see the
-// button at all. Chrome/Edge desktop only, and the button works before or after
-// Join since floating starts the call itself when nothing has joined yet.
+// button at all. Chrome/Edge desktop only. The PiP icon is the only way to float,
+// so like Expand it only shows once there is a call on the page.
 const PIP_OK = 'documentPictureInPicture' in window;
-if (PIP_OK) {
-  el('floatvid').style.display = 'inline-flex';
-  el('floatbtn2').style.display = 'grid';
-}
+if (PIP_OK) el('pipbtn').style.display = 'grid';
 
 let pipWin = null;
 
@@ -657,11 +627,16 @@ function copyStylesInto(pipDoc) {
 // where Document PiP itself is not available.
 //
 // &webcam&autostart join with the default camera immediately, skipping both the
-// "Join Room with Camera / Screenshare" menu and the device picker. Verified at
-// https://docs.vdo.ninja/advanced-settings/setup-parameters/and-webcam and
-// https://docs.vdo.ninja/advanced-settings/setup-parameters/and-autostart -- these
-// go on the PiP iframe only, so the page's own Join link keeps the menu and a
-// client can still choose screen share there.
+// "Join Room with Camera / Screenshare" menu and the device picker. &webcam also
+// hides VDO.Ninja's own screen-share button, so &screensharebutton (alias &ssb)
+// forces it back. Verified at
+// https://docs.vdo.ninja/advanced-settings/setup-parameters/and-webcam
+// https://docs.vdo.ninja/advanced-settings/setup-parameters/and-autostart
+// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/and-screensharebutton
+// These go on the PiP iframe and the auto-reconnect iframe only, so the page's
+// first Join link keeps the plain menu.
+const AUTOJOIN_PARAMS = '&webcam&autostart&ssb';
+
 function buildPipUI(win) {
   const doc = win.document;
   copyStylesInto(doc);
@@ -674,17 +649,19 @@ function buildPipUI(win) {
 
   const video = doc.createElement('div');
   video.className = 'pipvideo';
-  const frame = makeVdoFrame('&webcam&autostart');
+  const frame = makeVdoFrame(AUTOJOIN_PARAMS);
   video.appendChild(frame);
   doc.body.appendChild(video);
   return frame;
 }
 
+// Reconnecting after the PiP window closes rejoins with the same auto-join params
+// as the float, so it comes straight back instead of showing the menu again.
 function rejoinOnPage() {
   el('vidbox').innerHTML = '';
-  el('vidbox').appendChild(makeVdoFrame());
+  el('vidbox').appendChild(makeVdoFrame(AUTOJOIN_PARAMS));
   joinedState();
-  el('vidmsg').textContent = 'Rejoining the call on the page.';
+  el('vidmsg').textContent = 'Reconnecting on the page.';
   setTimeout(() => { el('vidmsg').textContent = 'Headphones please, or the studio hears an echo.'; }, 2000);
   updateCallCtrls();
 }
@@ -701,7 +678,6 @@ async function startFloat() {
   const existing = el('vidbox').querySelector('iframe');
   if (existing) existing.remove();
   closeExpand();
-  if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
 
   let win;
   try {
@@ -736,10 +712,7 @@ async function startFloat() {
   });
 }
 
-if (PIP_OK) {
-  el('floatvid').onclick = startFloat;
-  el('floatbtn2').onclick = startFloat;
-}
+if (PIP_OK) el('pipbtn').onclick = startFloat;
 
 el('go').onclick = async () => {
   el('go').disabled = true;
