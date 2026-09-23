@@ -55,11 +55,17 @@
            font-family:var(--mono); color:#454B55; margin:3px 0 0 21px; }
   .nosig { color:var(--faint); font-size:11px; margin-top:9px; }
   .nosig.warn { color:var(--gold); }
-  .talk { margin-top:18px; background:#242932; color:var(--text); }
-  .talk:hover { background:#2E343E; }
-  .talk.on { background:#E0435A; color:#fff; }
+  /* talkback is a quiet pill: the room talks on the video call, this is the fallback */
+  .talk { width:auto; margin:14px auto 0; padding:6px 13px 6px 10px; font-size:12px; font-weight:500;
+          display:inline-flex; align-items:center; gap:7px; border-radius:999px;
+          background:transparent; color:var(--soft); border:1px solid var(--rule); }
+  .talk::before { content:""; width:13px; height:13px; background:currentColor;
+          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='3' width='6' height='11' rx='3'/><path d='M5 11a7 7 0 0 0 14 0'/><path d='M12 18v3'/></svg>") center/contain no-repeat; mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='9' y='3' width='6' height='11' rx='3'/><path d='M5 11a7 7 0 0 0 14 0'/><path d='M12 18v3'/></svg>") center/contain no-repeat; }
+  .talk:hover { background:#1E232B; color:var(--text); }
+  .talk:disabled { background:transparent; color:var(--faint); border-color:var(--rule); }
+  .talk.on { background:#E0435A; border-color:#E0435A; color:#fff; }
   .talk.on:hover { background:#F05A70; }
-  .talkmsg { font-size:11px; color:var(--faint); margin-top:9px; min-height:15px; }
+  .talkmsg { font-size:11px; color:var(--faint); margin-top:7px; min-height:15px; }
   .vid { margin-top:14px; background:#242932; color:var(--text); }
   .vid:hover { background:#2E343E; }
   #vidbox { margin-top:14px; }
