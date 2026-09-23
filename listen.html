@@ -548,12 +548,14 @@ function vdoSrc() {
 
 // Shared by the page's own iframe, a rejoin after Back, and the one built fresh
 // inside the PiP window. allowfullscreen is the legacy attribute Safari still
-// wants alongside the allow="fullscreen" feature policy string.
-function makeVdoFrame() {
+// wants alongside the allow="fullscreen" feature policy string. extra is for the
+// PiP window's own auto-join params -- the page's plain Join link is untouched so
+// a client can still choose screen share from the menu there.
+function makeVdoFrame(extra) {
   const f = document.createElement('iframe');
   f.allow = 'camera; microphone; display-capture; autoplay; fullscreen';
   f.setAttribute('allowfullscreen', '');
-  f.src = vdoSrc();
+  f.src = vdoSrc() + (extra || '');
   return f;
 }
 
@@ -626,7 +628,7 @@ if (PIP_OK) {
   el('floatbtn2').style.display = 'grid';
 }
 
-let pipWin = null, pipFrame = null, pipMicOn = true, pipCamOn = true, hangupRequested = false;
+let pipWin = null;
 
 // The documented Document PiP pattern: clone every stylesheet into the new
 // document so it renders with this page's own tokens instead of user-agent styles.
@@ -648,77 +650,34 @@ function copyStylesInto(pipDoc) {
   });
 }
 
-// Builds the floating window's contents: the call filling it, a bottom strip of
-// four buttons. Takes any window-like object with a .document, so it can be
-// exercised against a plain window.open() popup as a stand-in where Document PiP
-// itself is not available.
+// Builds the floating window's contents: just the call, filling it edge to edge.
+// VDO.Ninja's own toolbar -- mic, camera, hang up -- is right there in the video
+// once joined, so a second set of ours would only be a redundant copy. Takes any
+// window-like object with a .document, so it can be exercised against a stand-in
+// where Document PiP itself is not available.
+//
+// &webcam&autostart join with the default camera immediately, skipping both the
+// "Join Room with Camera / Screenshare" menu and the device picker. Verified at
+// https://docs.vdo.ninja/advanced-settings/setup-parameters/and-webcam and
+// https://docs.vdo.ninja/advanced-settings/setup-parameters/and-autostart -- these
+// go on the PiP iframe only, so the page's own Join link keeps the menu and a
+// client can still choose screen share there.
 function buildPipUI(win) {
   const doc = win.document;
   copyStylesInto(doc);
   const style = doc.createElement('style');
   style.textContent =
     'html,body{margin:0;height:100%;background:var(--ink);}' +
-    '.pipwrap{display:flex;flex-direction:column;height:100%;}' +
-    '.pipvideo{flex:1;min-height:0;}' +
-    '.pipvideo iframe{width:100%;height:100%;border:0;display:block;background:var(--ink);}' +
-    '.pipbar{display:flex;gap:6px;padding:8px;background:var(--panel);border-top:1px solid var(--rule);}' +
-    '.pipbtn{flex:1;padding:9px 4px;font-size:12px;font-weight:600;font-family:var(--body);' +
-      'border:1px solid var(--rule);border-radius:8px;background:#242932;color:var(--text);cursor:pointer;}' +
-    '.pipbtn:hover{background:#2E343E;}' +
-    '.pipbtn.off{background:var(--gold);color:#14181E;border-color:var(--gold);}';
+    '.pipvideo{height:100%;}' +
+    '.pipvideo iframe{width:100%;height:100%;border:0;display:block;background:var(--ink);}';
   doc.head.appendChild(style);
 
-  const wrap = doc.createElement('div');
-  wrap.className = 'pipwrap';
   const video = doc.createElement('div');
   video.className = 'pipvideo';
-  const frame = makeVdoFrame();
+  const frame = makeVdoFrame('&webcam&autostart');
   video.appendChild(frame);
-  const bar = doc.createElement('div');
-  bar.className = 'pipbar';
-  const micBtn = doc.createElement('button');
-  micBtn.type = 'button'; micBtn.className = 'pipbtn'; micBtn.textContent = 'Mic';
-  const camBtn = doc.createElement('button');
-  camBtn.type = 'button'; camBtn.className = 'pipbtn'; camBtn.textContent = 'Camera';
-  const hangBtn = doc.createElement('button');
-  hangBtn.type = 'button'; hangBtn.className = 'pipbtn'; hangBtn.textContent = 'Hang up';
-  const backBtn = doc.createElement('button');
-  backBtn.type = 'button'; backBtn.className = 'pipbtn'; backBtn.textContent = 'Back';
-  bar.append(micBtn, camBtn, hangBtn, backBtn);
-  wrap.append(video, bar);
-  doc.body.appendChild(wrap);
-
-  pipMicOn = true;
-  pipCamOn = true;
-  micBtn.onclick = () => {
-    pipMicOn = !pipMicOn;
-    frame.contentWindow.postMessage({ mic: pipMicOn }, '*');
-    micBtn.classList.toggle('off', !pipMicOn);
-  };
-  camBtn.onclick = () => {
-    pipCamOn = !pipCamOn;
-    frame.contentWindow.postMessage({ camera: pipCamOn }, '*');
-    camBtn.classList.toggle('off', !pipCamOn);
-  };
-  hangBtn.onclick = () => {
-    hangupRequested = true;
-    try { frame.contentWindow.postMessage({ close: true }, '*'); } catch (e) {}
-    win.close();
-  };
-  backBtn.onclick = () => win.close();
-
-  pipFrame = frame;
+  doc.body.appendChild(video);
   return frame;
-}
-
-function resetVideoToJoinState() {
-  el('vidbox').innerHTML = '';
-  el('joinvid').disabled = false;
-  el('joinvid').textContent = 'Join video call';
-  document.querySelector('.card').classList.remove('wide');
-  el('vidmsg').textContent = '';
-  closeExpand();
-  updateCallCtrls();
 }
 
 function rejoinOnPage() {
@@ -769,15 +728,11 @@ async function startFloat() {
   el('vidbox').appendChild(note);
   el('vidmsg').textContent = 'Headphones please, or the studio hears an echo.';
 
-  // Covers the X button on the window chrome as well as our own Back/Hang up
-  // buttons -- they all end by closing the window, and this is what fires.
+  // The PiP window's X always means "bring the call back to the page" -- a real
+  // hang-up happens on VDO.Ninja's own toolbar inside the call.
   win.addEventListener('pagehide', () => {
-    const wasHangup = hangupRequested;
-    hangupRequested = false;
     pipWin = null;
-    pipFrame = null;
-    if (wasHangup) resetVideoToJoinState();
-    else rejoinOnPage();
+    rejoinOnPage();
   });
 }
 
