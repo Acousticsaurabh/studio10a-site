@@ -627,24 +627,36 @@ function copyStylesInto(pipDoc) {
 // where Document PiP itself is not available.
 //
 // &webcam&autostart join with the default camera immediately, skipping both the
-// "Join Room with Camera / Screenshare" menu and the device picker. &webcam also
-// hides VDO.Ninja's own screen-share button, so &screensharebutton (alias &ssb)
-// forces it back. Verified at
+// "Join Room with Camera / Screenshare" menu and the device picker. The rest trims
+// VDO.Ninja's own toolbar down to one row in the small float window: mic, camera,
+// screen share and hang up stay; file transfer, chat, the speaker toggle and
+// settings go. &nosettings also hides screen share as a side effect, which &ssb
+// is documented to override. Verified at
 // https://docs.vdo.ninja/advanced-settings/setup-parameters/and-webcam
 // https://docs.vdo.ninja/advanced-settings/setup-parameters/and-autostart
-// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/and-screensharebutton
+// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/and-screensharebutton (&ssb)
+// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/and-nosettings
+// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/nofileshare
+// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/chatbutton (=0 hides it)
+// https://docs.vdo.ninja/advanced-settings/buttons-and-control-bar-parameters/and-nospeakerbutton
 // These go on the PiP iframe and the auto-reconnect iframe only, so the page's
-// first Join link keeps the plain menu.
-const AUTOJOIN_PARAMS = '&webcam&autostart&ssb';
+// first Join link keeps the plain menu and full toolbar.
+const AUTOJOIN_PARAMS = '&webcam&autostart&ssb&nosettings&nofileshare&chatbutton=0&nospeakerbutton';
 
+// Fills the PiP window at whatever size it is resized to -- html/body pinned to
+// the window's own box, the video column stretching to match.
 function buildPipUI(win) {
   const doc = win.document;
   copyStylesInto(doc);
+  // The cloned page stylesheet includes the page's own body{display:grid;padding:...}
+  // (it centers the card on the page) -- override display and padding here too, not
+  // just margin/size, or that padding eats into the call on every side.
   const style = doc.createElement('style');
   style.textContent =
-    'html,body{margin:0;height:100%;background:var(--ink);}' +
-    '.pipvideo{height:100%;}' +
-    '.pipvideo iframe{width:100%;height:100%;border:0;display:block;background:var(--ink);}';
+    'html,body{margin:0;padding:0;width:100%;height:100%;overflow:hidden;' +
+      'background:var(--ink);display:block;}' +
+    '.pipvideo{display:flex;flex-direction:column;width:100%;height:100%;}' +
+    '.pipvideo iframe{width:100%;height:100%;border:0;flex:1;display:block;background:var(--ink);}';
   doc.head.appendChild(style);
 
   const video = doc.createElement('div');
