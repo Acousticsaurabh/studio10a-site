@@ -72,6 +72,51 @@
   #vidbox { margin-top:14px; }
   #vidbox iframe { width:100%; height:min(60vh,430px); border:1px solid var(--rule);
                    border-radius:11px; background:var(--ink); display:block; }
+  /* Expand fills the browser window (no OS fullscreen permission needed) and keeps
+     the same iframe -- REAPER etc. stay one Esc away instead of a whole permission
+     round trip. */
+  #vidbox.expanded { position:fixed; inset:0; z-index:9999; display:flex;
+                     background:var(--ink); border-radius:0; margin:0; padding:16px; }
+  #vidbox.expanded iframe { flex:1; width:100%; height:100%; border-radius:11px; }
+  .expandclose { position:absolute; top:26px; right:26px; width:36px; height:36px;
+                 flex:0 0 auto; padding:0; border-radius:8px; background:#242932;
+                 color:var(--soft); border:1px solid var(--rule); display:grid; place-items:center; }
+  .expandclose:hover { background:#2E343E; color:var(--text); }
+  .expandclose::before { content:""; width:14px; height:14px; background:currentColor;
+          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M6 6l12 12M18 6 6 18'/></svg>") center/contain no-repeat; }
+  /* Join and Float share a row; Float only appears when the browser can do
+     Document Picture-in-Picture at all (Chrome/Edge desktop). */
+  .vidrow { display:flex; gap:8px; margin-top:14px; }
+  .vidrow #joinvid { margin-top:0; flex:1; }
+  #floatvid { display:none; flex:0 0 auto; width:auto; margin-top:0; padding:0 14px;
+              align-items:center; gap:7px; font-size:12px; font-weight:500;
+              background:transparent; color:var(--soft); border:1px solid var(--rule); }
+  #floatvid:hover { background:#1E232B; color:var(--text); }
+  #floatvid::before { content:""; width:13px; height:13px; background:currentColor;
+          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat; }
+  /* Call view controls, shown under the video once a call is actually on the page.
+     Idle is the same muted grey as the mute button; active is gold, not the mute
+     button's red, since these are view choices, not a danger state. */
+  .callctrls { display:none; gap:8px; margin-top:10px; }
+  .callbtn { width:36px; height:32px; flex:0 0 auto; padding:0; border-radius:8px;
+             background:#242932; color:var(--soft); display:grid; place-items:center; }
+  .callbtn:hover { background:#2E343E; color:var(--text); }
+  .callbtn.on { background:var(--gold); color:#14181E; }
+  #fsbtn::before { content:""; width:15px; height:15px; background:currentColor;
+          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 9V4h5'/><path d='M20 9V4h-5'/><path d='M4 15v5h5'/><path d='M20 15v5h-5'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M4 9V4h5'/><path d='M20 9V4h-5'/><path d='M4 15v5h5'/><path d='M20 15v5h-5'/></svg>") center/contain no-repeat; }
+  #expandbtn::before { content:""; width:14px; height:14px; background:currentColor;
+          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='5' width='14' height='14' rx='2'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='5' y='5' width='14' height='14' rx='2'/></svg>") center/contain no-repeat; }
+  #floatbtn2 { display:none; }
+  #floatbtn2::before { content:""; width:14px; height:14px; background:currentColor;
+          -webkit-mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat;
+          mask:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><rect x='3' y='5' width='18' height='13' rx='2'/><rect x='13' y='12' width='7' height='5' rx='1'/></svg>") center/contain no-repeat; }
+  #vidbox .bringback { all:unset; cursor:pointer; color:var(--gold); font-family:var(--body);
+          font-size:11px; border-bottom:1px solid var(--gold-deep); padding-bottom:1px; margin-left:4px; }
+  #vidbox .bringback:hover { border-bottom-color:var(--gold); }
   .hr { border:0; border-top:1px solid var(--rule); margin:22px 0 0; }
   /* Headphones are not a suggestion. On speakers the mix goes straight back into the
      talkback mic and the studio hears its own song a half-second late, which is the
@@ -138,9 +183,17 @@
   <div class="talkmsg" id="talkmsg"></div>
   <div id="videowrap" style="display:none">
     <hr class="hr">
-    <button id="joinvid" class="vid">Join video call</button>
+    <div class="vidrow">
+      <button id="joinvid" class="vid">Join video call</button>
+      <button id="floatvid" type="button">Float the call</button>
+    </div>
     <div class="talkmsg" id="vidmsg"></div>
     <div id="vidbox"></div>
+    <div class="callctrls" id="callctrls">
+      <button id="fsbtn" class="callbtn" type="button" title="Fullscreen" aria-label="Fullscreen"></button>
+      <button id="expandbtn" class="callbtn" type="button" title="Expand" aria-label="Expand"></button>
+      <button id="floatbtn2" class="callbtn" type="button" title="Float the call" aria-label="Float the call"></button>
+    </div>
   </div>
   <div class="row" id="status">
     <span><span class="dot"></span><span id="state">Not connected</span></span>
@@ -484,26 +537,254 @@ if (!HOST || !K) {
 
 if (VDO_ROOM) el('videowrap').style.display = 'block';
 
+// The password is omitted entirely when blank rather than sent empty. VDO.Ninja
+// derives the room from this setting, so an empty `&password=` and no `&password`
+// at all are NOT the same room -- get it wrong and the client sits alone in a room
+// that looks fine, which is a miserable thing to debug mid-session.
+function vdoSrc() {
+  return 'https://vdo.ninja/?room=' + encodeURIComponent(VDO_ROOM)
+       + (VDO_PASS ? '&password=' + encodeURIComponent(VDO_PASS) : '');
+}
+
+// Shared by the page's own iframe, a rejoin after Back, and the one built fresh
+// inside the PiP window. allowfullscreen is the legacy attribute Safari still
+// wants alongside the allow="fullscreen" feature policy string.
+function makeVdoFrame() {
+  const f = document.createElement('iframe');
+  f.allow = 'camera; microphone; display-capture; autoplay; fullscreen';
+  f.setAttribute('allowfullscreen', '');
+  f.src = vdoSrc();
+  return f;
+}
+
+function joinedState() {
+  el('joinvid').disabled = true;
+  el('joinvid').textContent = 'Video call joined';
+  document.querySelector('.card').classList.add('wide');
+}
+
 el('joinvid').onclick = () => {
   if (!window.isSecureContext) {
     el('vidmsg').textContent =
       'The video call needs the secure Internet link, same as the mic.';
     return;
   }
-  el('joinvid').disabled = true;
-  el('joinvid').textContent = 'Video call joined';
-  document.querySelector('.card').classList.add('wide');
-  const f = document.createElement('iframe');
-  f.allow = 'camera; microphone; display-capture; autoplay; fullscreen';
-  // The password is omitted entirely when blank rather than sent empty. VDO.Ninja
-  // derives the room from this setting, so an empty `&password=` and no `&password`
-  // at all are NOT the same room -- get it wrong and the client sits alone in a room
-  // that looks fine, which is a miserable thing to debug mid-session.
-  f.src = 'https://vdo.ninja/?room=' + encodeURIComponent(VDO_ROOM)
-        + (VDO_PASS ? '&password=' + encodeURIComponent(VDO_PASS) : '');
-  el('vidbox').appendChild(f);
+  joinedState();
+  el('vidbox').appendChild(makeVdoFrame());
   el('vidmsg').textContent = 'Headphones please, or the studio hears an echo.';
+  updateCallCtrls();
 };
+
+// --- call view controls: fullscreen, expand, float --------------------------
+// Three ways to get the call out from under a small box: real OS fullscreen
+// (VDO.Ninja's own toolbar comes with it), a page-filling "expand" that needs no
+// OS permission and keeps REAPER one Esc away, and floating the call into its own
+// window. The strip only makes sense once there is actually a call on the page.
+function updateCallCtrls() {
+  el('callctrls').style.display = el('vidbox').querySelector('iframe') ? 'flex' : 'none';
+}
+
+function isFs() {
+  return (document.fullscreenElement || document.webkitFullscreenElement) === el('vidbox');
+}
+el('fsbtn').onclick = () => {
+  const v = el('vidbox');
+  if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+  else (v.requestFullscreen || v.webkitRequestFullscreen).call(v);
+};
+['fullscreenchange', 'webkitfullscreenchange'].forEach((ev) =>
+  document.addEventListener(ev, () => el('fsbtn').classList.toggle('on', isFs())));
+
+function closeExpand() {
+  el('vidbox').classList.remove('expanded');
+  el('expandbtn').classList.remove('on');
+  const x = el('vidbox').querySelector('.expandclose');
+  if (x) x.remove();
+}
+el('expandbtn').onclick = () => {
+  if (el('vidbox').classList.contains('expanded')) { closeExpand(); return; }
+  el('vidbox').classList.add('expanded');
+  el('expandbtn').classList.add('on');
+  const x = document.createElement('button');
+  x.type = 'button';
+  x.className = 'expandclose';
+  x.setAttribute('aria-label', 'Close expanded view');
+  x.onclick = closeExpand;
+  el('vidbox').appendChild(x);
+};
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && el('vidbox').classList.contains('expanded')) closeExpand();
+});
+
+// --- float the call into an always-on-top window -----------------------------
+// Document Picture-in-Picture only -- Safari, Firefox and phones never see the
+// button at all. Chrome/Edge desktop only, and the button works before or after
+// Join since floating starts the call itself when nothing has joined yet.
+const PIP_OK = 'documentPictureInPicture' in window;
+if (PIP_OK) {
+  el('floatvid').style.display = 'inline-flex';
+  el('floatbtn2').style.display = 'grid';
+}
+
+let pipWin = null, pipFrame = null, pipMicOn = true, pipCamOn = true, hangupRequested = false;
+
+// The documented Document PiP pattern: clone every stylesheet into the new
+// document so it renders with this page's own tokens instead of user-agent styles.
+function copyStylesInto(pipDoc) {
+  [...document.styleSheets].forEach((sheet) => {
+    try {
+      const css = [...sheet.cssRules].map((r) => r.cssText).join('');
+      const style = document.createElement('style');
+      style.textContent = css;
+      pipDoc.head.appendChild(style);
+    } catch (e) {
+      // Cross-origin sheets (the Google Fonts links) throw reading .cssRules --
+      // clone the <link> itself instead so the fonts still load in the PiP window.
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = sheet.href;
+      pipDoc.head.appendChild(link);
+    }
+  });
+}
+
+// Builds the floating window's contents: the call filling it, a bottom strip of
+// four buttons. Takes any window-like object with a .document, so it can be
+// exercised against a plain window.open() popup as a stand-in where Document PiP
+// itself is not available.
+function buildPipUI(win) {
+  const doc = win.document;
+  copyStylesInto(doc);
+  const style = doc.createElement('style');
+  style.textContent =
+    'html,body{margin:0;height:100%;background:var(--ink);}' +
+    '.pipwrap{display:flex;flex-direction:column;height:100%;}' +
+    '.pipvideo{flex:1;min-height:0;}' +
+    '.pipvideo iframe{width:100%;height:100%;border:0;display:block;background:var(--ink);}' +
+    '.pipbar{display:flex;gap:6px;padding:8px;background:var(--panel);border-top:1px solid var(--rule);}' +
+    '.pipbtn{flex:1;padding:9px 4px;font-size:12px;font-weight:600;font-family:var(--body);' +
+      'border:1px solid var(--rule);border-radius:8px;background:#242932;color:var(--text);cursor:pointer;}' +
+    '.pipbtn:hover{background:#2E343E;}' +
+    '.pipbtn.off{background:var(--gold);color:#14181E;border-color:var(--gold);}';
+  doc.head.appendChild(style);
+
+  const wrap = doc.createElement('div');
+  wrap.className = 'pipwrap';
+  const video = doc.createElement('div');
+  video.className = 'pipvideo';
+  const frame = makeVdoFrame();
+  video.appendChild(frame);
+  const bar = doc.createElement('div');
+  bar.className = 'pipbar';
+  const micBtn = doc.createElement('button');
+  micBtn.type = 'button'; micBtn.className = 'pipbtn'; micBtn.textContent = 'Mic';
+  const camBtn = doc.createElement('button');
+  camBtn.type = 'button'; camBtn.className = 'pipbtn'; camBtn.textContent = 'Camera';
+  const hangBtn = doc.createElement('button');
+  hangBtn.type = 'button'; hangBtn.className = 'pipbtn'; hangBtn.textContent = 'Hang up';
+  const backBtn = doc.createElement('button');
+  backBtn.type = 'button'; backBtn.className = 'pipbtn'; backBtn.textContent = 'Back';
+  bar.append(micBtn, camBtn, hangBtn, backBtn);
+  wrap.append(video, bar);
+  doc.body.appendChild(wrap);
+
+  pipMicOn = true;
+  pipCamOn = true;
+  micBtn.onclick = () => {
+    pipMicOn = !pipMicOn;
+    frame.contentWindow.postMessage({ mic: pipMicOn }, '*');
+    micBtn.classList.toggle('off', !pipMicOn);
+  };
+  camBtn.onclick = () => {
+    pipCamOn = !pipCamOn;
+    frame.contentWindow.postMessage({ camera: pipCamOn }, '*');
+    camBtn.classList.toggle('off', !pipCamOn);
+  };
+  hangBtn.onclick = () => {
+    hangupRequested = true;
+    try { frame.contentWindow.postMessage({ close: true }, '*'); } catch (e) {}
+    win.close();
+  };
+  backBtn.onclick = () => win.close();
+
+  pipFrame = frame;
+  return frame;
+}
+
+function resetVideoToJoinState() {
+  el('vidbox').innerHTML = '';
+  el('joinvid').disabled = false;
+  el('joinvid').textContent = 'Join video call';
+  document.querySelector('.card').classList.remove('wide');
+  el('vidmsg').textContent = '';
+  closeExpand();
+  updateCallCtrls();
+}
+
+function rejoinOnPage() {
+  el('vidbox').innerHTML = '';
+  el('vidbox').appendChild(makeVdoFrame());
+  joinedState();
+  el('vidmsg').textContent = 'Rejoining the call on the page.';
+  setTimeout(() => { el('vidmsg').textContent = 'Headphones please, or the studio hears an echo.'; }, 2000);
+  updateCallCtrls();
+}
+
+async function startFloat() {
+  if (!PIP_OK) return;
+  if (!window.isSecureContext) {
+    el('vidmsg').textContent = 'The video call needs the secure Internet link, same as the mic.';
+    return;
+  }
+  // Moving an iframe reloads it anyway, so a fresh one goes straight into the PiP
+  // document. If a call was already running on the page, drop that one first --
+  // otherwise the guest is holding two connections into the same room.
+  const existing = el('vidbox').querySelector('iframe');
+  if (existing) existing.remove();
+  closeExpand();
+  if (isFs()) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+
+  let win;
+  try {
+    win = await documentPictureInPicture.requestWindow({ width: 420, height: 300 });
+  } catch (e) {
+    el('vidmsg').textContent = 'Could not open the floating window.';
+    return;
+  }
+  pipWin = win;
+  buildPipUI(win);
+  joinedState();
+  updateCallCtrls();
+
+  el('vidbox').innerHTML = '';
+  const note = document.createElement('div');
+  note.className = 'talkmsg';
+  note.textContent = 'Call is floating. ';
+  const back = document.createElement('button');
+  back.type = 'button';
+  back.className = 'bringback';
+  back.textContent = 'Bring back';
+  back.onclick = () => { if (pipWin) try { pipWin.close(); } catch (e) {} };
+  note.appendChild(back);
+  el('vidbox').appendChild(note);
+  el('vidmsg').textContent = 'Headphones please, or the studio hears an echo.';
+
+  // Covers the X button on the window chrome as well as our own Back/Hang up
+  // buttons -- they all end by closing the window, and this is what fires.
+  win.addEventListener('pagehide', () => {
+    const wasHangup = hangupRequested;
+    hangupRequested = false;
+    pipWin = null;
+    pipFrame = null;
+    if (wasHangup) resetVideoToJoinState();
+    else rejoinOnPage();
+  });
+}
+
+if (PIP_OK) {
+  el('floatvid').onclick = startFloat;
+  el('floatbtn2').onclick = startFloat;
+}
 
 el('go').onclick = async () => {
   el('go').disabled = true;
