@@ -66,6 +66,7 @@
   .talk.on { background:#E0435A; border-color:#E0435A; color:#fff; }
   .talk.on:hover { background:#F05A70; }
   .talkmsg { font-size:11px; color:var(--faint); margin-top:7px; min-height:15px; }
+  .bufhint { font-size:11px; color:var(--faint); margin-top:6px; }
   .vid { margin-top:14px; background:#242932; color:var(--text); }
   .vid:hover { background:#2E343E; }
   #vidbox { margin-top:14px; }
@@ -126,6 +127,7 @@
   </div>
   <label>Buffer <span id="buflabel">180 ms</span>
     <input id="buf" type="range" min="60" max="600" step="20" value="180"></label>
+  <div class="bufhint">Stutters or gaps? Move right. Too much delay? Move left.</div>
   <div class="meters">
     <div class="m"><span>L</span><div class="track"><div class="fill" id="mL"></div></div></div>
     <div class="m"><span>R</span><div class="track"><div class="fill" id="mR"></div></div></div>
@@ -574,6 +576,13 @@ el('go').onclick = async () => {
         if (m.talk === 'granted') beginCapture();
         else if (m.talk === 'busy') talkMsg('Someone else has the line right now.');
         else if (m.talk === 'released') stopTalk();
+        else if (m.buf !== undefined) {
+          el('buf').value = m.buf;
+          el('buflabel').textContent = m.buf + ' ms';
+          setTarget();
+          talkMsg('Studio set your buffer to ' + m.buf + ' ms.');
+          setTimeout(() => talkMsg(''), 2000);
+        }
       } catch (e) {}
       return;
     }
