@@ -310,6 +310,7 @@ const PROF = {
   auto:  {n:"Moises decides", d:"Creative Control off. The first try, always.", cc:false, opt:true},
   layer: {n:"Follow the song", d:"For orchestral layering. Leans on the selection and its chords more than on the words.", cc:true, c:3, x:6, h:8, opt:true},
   colour:{n:"Follow the words", d:"For sounds the model does not know by name, most Indian instruments. The words pull harder.", cc:true, c:7, x:3, h:5, opt:false},
+  roots: {n:"Hold the roots", d:"For long low notes. Harmony pulled hardest, so the held notes sit on the chord roots.", cc:true, c:4, x:4, h:10, opt:true},
   free:  {n:"Surprise me", d:"Everything low. More adventurous, less obedient. For finding an idea.", cc:true, c:1.5, x:1.5, h:1.5, opt:true}
 };
 
@@ -342,7 +343,7 @@ const ITEMS = [
  p:"cellos and double basses, sustained low legato notes, deep warm dark tone, slow heavy bows, orchestral low end, concert hall",
  s:"deep sustained cellos and basses, warm legato",
  r:"deeper, darker, longer notes",
- tip:"Generate this first in any orchestral build. Everything after it hears it in the selection and sits on top."},
+ tip:"Cellos and basses together. For a floor below the cellos, use <b>Contrabass pedal</b> in the Bass family. Generate this first in any orchestral build. Everything after it hears it in the selection and sits on top."},
 {f:"orch",g:"Beds",n:"Violin halo",d:"High, airy, barely there.",btn:"strings",t:"native",prof:"layer",ch:1,
  p:"high violins, soft sustained notes, airy and shimmering, gentle sul tasto, delicate, wide concert hall reverb, ethereal",
  s:"soft airy high violins, sustained, shimmering",
@@ -582,6 +583,32 @@ const ITEMS = [
  r:"sweeter, softer tremolo"},
 
 /* BASS */
+{f:"bass",g:"Orchestral low",n:"Contrabass pedal",d:"Bowed basses alone, long notes below the cellos.",btn:"strings",alt:"bass",t:"native",prof:"roots",ch:1,
+ p:"bowed double basses alone, very low sustained long notes, held whole notes across the bar, below the cellos, slow heavy bows, deep dark warm, orchestral, concert hall",
+ s:"low bowed double basses, long held notes",
+ r:"longer notes, fewer notes, held across the bar",
+ flip:"pulses, plucking, walking eighths → said as bowed, held whole notes, slow heavy bows",
+ tip:"The floor under the orchestra. <b>Strings first:</b> the Bass button hears a bass player and answers with pulses. Chord track filled in and Use Project Chords on, so the long notes land on the roots. If it still moves too much, Regenerate with the short fix phrasing."},
+{f:"bass",g:"Orchestral low",n:"Slow low counterline",d:"A long moving line against the melody.",btn:"strings",t:"native",prof:"layer",ch:1,
+ p:"slow low countermelody on bowed double basses and cellos, long legato notes moving stepwise, gently answering the melody, deep and warm, orchestral, concert hall",
+ s:"slow low legato countermelody, basses and cellos",
+ r:"slower, longer notes, more stepwise",
+ tip:"The long counterpart. Generate it after the pedal or the bed, with the melody audible in the selection, so it has something to move against. Two notes a bar is plenty."},
+{f:"bass",g:"Orchestral low",n:"Basses an octave below",d:"Doubling the cello line, one octave down.",btn:"strings",t:"native",prof:"layer",ch:1,
+ p:"double basses doubling the cello line an octave below, sustained legato, deep full orchestral low end, warm, slow bows",
+ s:"basses doubling cellos an octave below, legato",
+ r:"deeper, more legato",
+ tip:"Best in Regenerate or with the cello stem playing in the selection, so there is a line to double."},
+{f:"bass",g:"Orchestral low",n:"Arco upright",d:"The Bass button, made to bow.",btn:"bass",alt:"strings",t:"test",prof:"roots",ch:1,
+ p:"bowed upright bass, arco, long sustained notes, smooth slow bows, held whole notes, deep warm and dark",
+ s:"arco upright bass, long sustained bowed notes",
+ r:"longer, smoother bows",
+ tip:"When you want the Bass model's tighter lock to the chords but a bowed sound. If it still plucks, move to Strings and use Contrabass pedal."},
+{f:"bass",g:"Orchestral low",n:"Tuba and contrabassoon",d:"A soft wind pedal under the strings.",btn:"others",t:"native",prof:"roots",ch:1,
+ p:"tuba and contrabassoon, very low long sustained notes, soft and round, deep orchestral pedal, warm concert hall",
+ s:"soft low tuba and contrabassoon pedal",
+ r:"softer, longer, rounder",
+ tip:"Blend it 6 to 10 dB under the contrabass pedal. Strings plus a wind pedal is what makes a low end sound orchestral instead of synthetic."},
 {f:"bass",g:"Bass",n:"Warm fingered bass",d:"Round, soft attack, under everything.",btn:"bass",t:"native",prof:"layer",ch:1,
  p:"warm round fingered electric bass, smooth sustained notes, soft attack, deep, sitting under the groove",
  s:"warm round fingered bass, smooth",
@@ -589,7 +616,8 @@ const ITEMS = [
 {f:"bass",g:"Bass",n:"Upright bass",d:"Acoustic, woody, plucked.",btn:"bass",t:"native",prof:"auto",ch:1,
  p:"acoustic upright bass, warm woody plucked notes, round, natural room",
  s:"warm woody upright bass",
- r:"woodier, rounder"},
+ r:"woodier, rounder",
+ tip:"Plucked by nature, so it gives pulses. For long orchestral notes use <b>Contrabass pedal</b> or <b>Arco upright</b>."},
 {f:"bass",g:"Bass",n:"Fretless glide",d:"The bass that can do meend.",btn:"bass",t:"describe",prof:"colour",ch:1,
  p:"fretless bass, smooth gliding slides between notes, warm singing tone, deep and expressive",
  s:"singing fretless bass, gliding slides",
@@ -665,7 +693,7 @@ const ITEMS = [
  b:`Moises makes one stem per run, and every run hears whatever is inside your selection. So build bottom up, and let each pass listen to the last.
 
 <b>0. Set up.</b> Chord track filled in (or run chord detection). Guide mix and vocal audible. Select a <b>range</b> across the tracks, not one event: the extension mixes the selection down and sends that as context.
-<b>1. Strings</b> → Low strings foundation, profile Follow the song, Use Project Chords on. Drag the result to its own track.
+<b>1. Strings</b> → Contrabass pedal (profile Hold the roots) for the floor, then Low strings foundation for the cellos. Use Project Chords on. Drag each result to its own track.
 <b>2. Strings</b> → Warm string bed. Same range. It now hears the low strings.
 <b>3. Strings</b> → Violin halo, only if the bed feels small.
 <b>4. Keys</b> → Warm analog pad, 10 dB under. This is the glue.
@@ -1090,7 +1118,7 @@ const INTRO={
  indbow:"<b>Indian strings.</b> Moises does not know most of these by name. The captions lead with the sound in plain words and put the name last. Reference audio helps most here.",
  indwind:"<b>Indian winds.</b> All under Others. Breath and slides first, the name last.",
  pluck:"<b>Guitars, and the plucked instruments that are not guitars.</b> The Guitars button pulls everything toward a guitar, so sitar and friends sit in Indian Strings under Others.",
- bass:"<b>Bass.</b> Short captions work best here. The notes come from the chords and the context; the words only choose the tone.",
+ bass:"<b>Bass, including the orchestral low end.</b> For long bowed notes below the cellos, start with <b>Orchestral low</b>: those go through the Strings button, because the Bass button answers like a bass player. Short captions work best here. The notes come from the chords and the context; the words only choose the tone.",
  perc:"<b>Drums and Indian percussion.</b> The Drums model thinks in kits. Tabla, dholak and the rest start under Others. No harmonic settings on drums.",
  layer:"<b>How to make generated stems sound like one orchestra</b>, not six guesses stacked on top of each other.",
  moves:"<b>What the Moises panel can do beyond one prompt.</b> Regenerate, extend, presets, voices, the library.",
