@@ -700,6 +700,7 @@ const ITEMS = [
 <b>5. Others</b> → Warm French horns, chorus ranges only.
 <b>6. Others</b> → Harp or orchestral flute for air. Percussion last: Drums or Others.
 
+Between passes, select the next range and press your Generate Stems with Moises key (see Skip Return Home) instead of Return Home.
 Mute what you do not need before each pass. Whatever plays in the range is what the next stem answers.`},
 {f:"layer",g:"Build",n:"One section at a time",d:"A caption is a sound, not a timeline.",t:"recipe",k:"recipe",
  b:`Suno let you write arrangement in time: begin with this, answer it with that, build to the finale. <b>The Moises text box cannot do that.</b> It reads a description of a sound, not a sequence.
@@ -779,8 +780,22 @@ The presets are genre shaped (funk, trap, rock overdrive, lo-fi keys and the lik
  b:`1 credit = 30 seconds of generated audio, rounded up. A 45 second string bed is 2 credits, whatever the result.
 
 So generate the <b>section</b> you need, not the song. Loop and extend what works; regenerate only the bars that went wrong. Separation and voice conversion have their own monthly counts, set by your plan.`},
+{f:"moves",g:"Generate",n:"Skip Return Home",d:"New range, no starting over. The fix for the reuse banner.",t:"recipe",k:"recipe",
+ b:`The banner means the panel is still holding the last range. You do not need Return Home. Two ways to hand it the new one:
+
+<b>1. The command, from Studio Pro itself.</b> Select the new event or range, then right click → <b>Generate Stems with Moises</b>. It sends a fresh mixdown straight to the Generate page.
+Better: give it a key. Studio Pro → Keyboard Shortcuts, search <b>Moises</b>, category Audio:
+• Generate Stems with Moises → <b>Ctrl Option G</b>
+• Separate Stems with Moises → <b>Ctrl Option S</b>
+• Convert Voice with Moises → <b>Ctrl Option V</b>
+• Show Moises (Browser) → <b>Ctrl Option M</b>
+Then each layering pass is: select range, Ctrl Option G, paste, Generate Stem.
+
+<b>2. Drag and drop.</b> Drag the event, or the range, onto the Moises panel. It re-reads the selection and mixes it down again.
+
+Either way, check the first time whether your instrument and Custom text survived the refresh. If they did, the whole orchestra build is one key per pass. If not, the card's Copy button is one paste away.`},
 {f:"moves",g:"Generate",n:"Processing reuses the range",d:"The banner at the bottom, explained.",t:"recipe",k:"recipe",
- b:`"Processing will reuse the previous event/range." After one run, the next one uses the same selection. Handy for the layering passes. <b>Return Home</b> to pick a new range, or you will generate the chorus horns over the verse.`},
+ b:`"Processing will reuse the previous event/range." After one run, the next one uses the same selection. Handy for the layering passes. <b>Return Home</b> to pick a new range, or you will generate the chorus horns over the verse. Faster: see <b>Skip Return Home</b>.`},
 {f:"moves",g:"Voice",n:"Voice Conversion",d:"Same performance, another voice model.",t:"recipe",k:"recipe",
  b:`Moises also converts voices. Options on the panel:
 • <b>Isolate Vocals</b>: extract the vocal from a mixed source first.
