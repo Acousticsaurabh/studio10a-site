@@ -270,6 +270,20 @@
   .services .closing { margin-top:1.6rem; font-family:var(--geo); font-weight:600;
                        font-size:1.05rem; color:var(--blue-deep); }
 
+  /* resources */
+  .resources .rcards { display:grid; grid-template-columns:repeat(auto-fit,minmax(15rem,1fr)); gap:1px;
+                       background:var(--rule); border:1px solid var(--rule); margin-top:1.5rem; }
+  .resources .rc { background:var(--paper); padding:1.6rem 1.5rem; display:flex; flex-direction:column; gap:.5rem; }
+  .resources .rc h3 { font-family:var(--geo); font-weight:600; font-size:1.15rem; }
+  .resources .rc p { font-size:.9rem; color:var(--soft); }
+  .resources .badge { align-self:flex-start; font-family:var(--mono); font-size:.62rem; letter-spacing:.14em;
+                      text-transform:uppercase; padding:.2rem .55rem; border:1px solid var(--gold); color:var(--gold-deep); }
+  .resources .badge.now { background:var(--gold); color:#14181E; }
+  .resources .rc a.go { margin-top:auto; padding-top:.6rem; font-family:var(--geo); font-weight:600; font-size:.85rem;
+                        color:var(--blue-deep); text-decoration:none; }
+  .resources .rc a.go:hover { text-decoration:underline; }
+  .resources .rc.quiet h3, .resources .rc.quiet p { color:var(--faint); }
+
   /* ── work / playlist ── */
   .work .feature { margin-top:1.6rem; }
   .work .feature iframe { width:100%; aspect-ratio:16/9; border:0; display:block;
@@ -439,6 +453,7 @@ footer .fdot:hover,footer .fdot:focus-visible{opacity:1;transform:scale(1.35)}
       <a href="#brands">Brands</a>
       <a href="#saurabh">The Mind</a>
       <a href="#services">Services</a>
+      <a href="#resources">Resources</a>
       <a href="voicesuite.html">Voice Suite</a>
       <a href="#story">Room 10A</a>
       <a href="#contact">Contact</a>
@@ -626,6 +641,36 @@ footer .fdot:hover,footer .fdot:focus-visible{opacity:1;transform:scale(1.35)}
     </div>
     <p class="closing">Let's make something amazing together - because Studio10a
     sounds better!</p>
+  </div>
+</section>
+
+<hr class="goldbar">
+
+<section class="resources" id="resources">
+  <div class="wrap">
+    <p class="kicker">Resources</p>
+    <h2>Free tools from <em>the room</em></h2>
+    <p style="max-width:56ch; color:var(--soft)">The tools we run our own sessions on, shared free. Take what helps.</p>
+    <div class="rcards">
+      <div class="rc">
+        <span class="badge">Coming soon</span>
+        <h3>ReaStudio</h3>
+        <p>REAPER, set up the way your hands already expect. A theme, a tool row and an inspector, with a Help guide.</p>
+        <p>One click saved is one click earned. Free.</p>
+        <a class="go" href="reastudio.html">See ReaStudio</a>
+      </div>
+      <div class="rc">
+        <span class="badge now">Available now</span>
+        <h3>Voice Suite</h3>
+        <p>Free AI voice plugins for your DAW, for Mac and Windows. Coffee optional.</p>
+        <a class="go" href="voicesuite.html">See Voice Suite</a>
+      </div>
+      <div class="rc quiet">
+        <span class="badge">Coming soon</span>
+        <h3>More themes</h3>
+        <p>More themes coming soon.</p>
+      </div>
+    </div>
   </div>
 </section>
 
