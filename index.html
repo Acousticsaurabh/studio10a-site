@@ -653,10 +653,10 @@ footer .fdot:hover,footer .fdot:focus-visible{opacity:1;transform:scale(1.35)}
     <p style="max-width:56ch; color:var(--soft)">The tools we run our own sessions on, shared free. Take what helps.</p>
     <div class="rcards">
       <div class="rc">
-        <span class="badge">Coming soon</span>
+        <span class="badge">Build on request</span>
         <h3>ReaStudio</h3>
         <p>REAPER, set up the way your hands already expect. A theme, a tool row and an inspector, with a Help guide.</p>
-        <p>One click saved is one click earned. Free.</p>
+        <p>One click saved is one click earned. Free. Public download coming soon, ask us for the build today.</p>
         <a class="go" href="reastudio.html">See ReaStudio</a>
       </div>
       <div class="rc">
@@ -756,6 +756,7 @@ footer .fdot:hover,footer .fdot:focus-visible{opacity:1;transform:scale(1.35)}
           <option>Ad film / video production</option>
           <option>Branding &amp; creative campaign</option>
           <option>Content &amp; social media</option>
+          <option>ReaStudio build</option>
           <option>Something else</option>
         </select></div>
       <div><label for="f-msg">Tell us about it</label><textarea id="f-msg" name="message" required></textarea></div>
@@ -876,6 +877,9 @@ footer .fdot:hover,footer .fdot:focus-visible{opacity:1;transform:scale(1.35)}
     if (location.search.indexOf('sent=1') > -1) {
       document.getElementById('sentnote').classList.add('show');
       history.replaceState(null, '', location.pathname + '#contact');
+    }
+    if (location.search.indexOf('ask=reastudio') > -1) {
+      document.getElementById('f-need').value = 'ReaStudio build';
     }
   })();
 </script>
